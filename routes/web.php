@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Usuario;
 use App\Candidatos;
+use Illuminate\Support\Facades\Auth;
 
     Route::get('/','Controller@home')->name('CIPA_Online.Welcome');
     Route::get('/eleicoes','EleicaoController@index')->name('Eleicoes_Index')->middleware('auth');
@@ -28,6 +29,10 @@ use App\Candidatos;
     Route::post('/candidato/filter_candidato', 'CandidatoController@filter_candidato')->name('Candidato_FilterCandidato')->middleware('auth');
     Route::get('/candidato/pdf_listagem_geral', 'CandidatoController@pdf_listagem_geral')->name('Candidato_pdfListagemGeral')->middleware('auth');
     Route::get('/candidato/logout','CandidatoController@logout')->name('Candidato_Logout');
+
+    // Rotas utilizadas na importação de servidores
+    Route::get('/importacoes', 'ImportacaoController@index')->name('importacoes')->middleware('auth');
+    Route::post('/importar-servidor', 'ImportacaoController@importar_servidor')->middleware('auth');
 
     Route::get('/votacao','VotacaoController@index')->name('Votacao_Index');
     Route::post('/votacao/login','VotacaoController@login_votacao')->name('Votacao_Login');
@@ -65,8 +70,6 @@ use App\Candidatos;
     Route::get('/usuarios/editar/{id}','UsuarioController@editar')->name('Usuarios_editar')->middleware('auth')->middleware(Usuario::class);
     Route::post('/usuarios/editar','UsuarioController@update')->name('Usuarios_update')->middleware('auth')->middleware(Usuario::class);
     Route::get('/usuarios/deletar/{id}','UsuarioController@destroy')->name('Usuarios_destroy')->middleware('auth')->middleware(Usuario::class);
-    Route::get('/logout', function () {Auth::logout();
-
-    return redirect("/login");});
+    Route::get('/logout', function () {Auth::logout();return redirect("/login");});
     
 Auth::routes();
