@@ -1,0 +1,39 @@
+<style>
+    .table {
+        margin-bottom: 0px;
+    }
+
+    html,
+    body {
+        margin: 8px;
+        padding: 8px;
+    }
+
+    .table-condensed {
+        font-size: 13px;
+    }
+
+    .table>tbody>tr>td,
+    .table>tbody>tr>th,
+    .table>tfoot>tr>td,
+    .table>tfoot>tr>th,
+    .table>thead>tr>td,
+    .table>thead>tr>th {
+        border-top: 0px;
+    }
+
+    .borda {
+        border-radius: 5px;
+        border: 1px solid rgb(87, 89, 98);
+        margin-bottom: 12px;
+    }
+
+    .table-condensed>tbody>tr>td,
+    .table-condensed>tbody>tr>th,
+    .table-condensed>tfoot>tr>td,
+    .table-condensed>tfoot>tr>th,
+    .table-condensed>thead>tr>td,
+    .table-condensed>thead>tr>th {
+        padding: 3px;
+    }
+</style>

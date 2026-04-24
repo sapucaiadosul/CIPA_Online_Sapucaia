@@ -1,0 +1,303 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    flex: 1;
+    background: #fad9e6 !important;
+}
+
+header nav {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 10rem;
+    background-color: #ffc93b !important ;
+}
+
+header nav div.span {
+    justify-content: flex-start;
+    width: 100%;
+}
+
+header nav span {
+    font-size: 2rem;
+    color: white;
+    letter-spacing: 1px;
+    font-weight: bold;
+    padding-right: 20px;
+}
+
+header nav img {
+    height: auto;
+    width: 100%;
+    max-width: 72px;
+    max-height: 82px;
+    margin: 0.3rem 0;
+}
+
+main {
+    flex: 5;
+    background: #f9fbfd;
+}
+
+main div.container {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+div.container .card {
+    min-height: 391px;
+    max-height: 100%;
+    width: 700px;
+    margin: 3rem 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.25) !important;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card .card-header {
+    text-align: center;
+    font-size: 1.8rem;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #cdced1;
+}
+
+div.form {
+    height: 100%;
+}
+
+.form form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+form div.input {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    align-items: center;
+}
+
+div.remember-password {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+}
+
+div.remember-password input {
+    flex: 1;
+    height: 1rem;
+}
+
+div.remember-password label {
+    flex: 10;
+    justify-self: flex-start;
+    font-size: 0.9rem;
+}
+
+div.input input:not([type='checkbox']) {
+    width: 50%;
+    border-radius: 6px;
+    outline: 0;
+    text-align: center;
+    height: 2.3rem;
+    border: 1px solid #cdced1;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+div.input input:not([type='checkbox'])+input {
+    margin-top: 1rem;
+}
+
+div.input input:not([type='checkbox']):focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #ffc93b;
+    outline: 0;
+    box-shadow: 0 0 0 0.13rem #ffc93b);
+}
+
+div.input button {
+    width: 50%;
+    color: #fff;
+    background-color: #ffc93b ;
+    padding: 7px;
+    outline: none;
+    border-style: solid;
+    border-radius: 12px;
+    border-color: #ffc93b ;
+    font-size: 1.3rem;
+    margin-top: 2rem;
+    cursor: pointer;
+}
+
+div.input button:hover {
+    color: #ffc93b ;
+    background-color: #fff;
+    border-color: #ffc93b ;
+}
+
+div.details {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    font-size: 0.9rem;
+    justify-content: center;
+}
+
+div.details a {
+    margin-top: 0.5rem;
+    text-decoration: none;
+    color: #eb94b2 !important;
+}
+
+div.details p {
+    margin: 1.5rem 0;
+}
+
+footer {
+    flex: 0.5;
+    background: #ffc93b  !important;
+    min-height: 53px;
+}
+
+footer div {
+    height: 100%;
+    width: 100%;
+}
+
+footer div ul {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    padding-right: 2rem;
+    color: #fff;
+}
+
+footer div ul li {
+    list-style: none;
+    font-size: 0.9rem;
+}
+
+span.invalid-feedback {
+    font-size: 0.8rem;
+    color: #FF0000;
+    margin: 0.3rem 0;
+}
+
+@media (max-width: 930px) {
+    header nav span {
+        font-size: 1.6rem;
+    }
+
+    header nav img {
+        height: 62px;
+        width: 52px;
+    }
+
+    .card .card-header {
+        font-size: 1.5rem;
+    }
+
+    div.input button {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 800px) {
+    header nav {
+        padding: 0 3rem;
+    }
+
+    div.container .card {
+        width: calc(100% - 15%);
+    }
+
+    div.input input:not([type='checkbox']) {
+        width: 70%;
+    }
+
+    div.remember-password {
+        width: 70%;
+    }
+
+    div.input button {
+        width: 70%;
+    }
+}
+
+@media (max-width: 600px) {
+    header nav span {
+        font-size: 1.3rem;
+    }
+
+    header nav img {
+        height: 52px;
+        width: 42px;
+    }
+
+    .card .card-header {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 475px) {
+    header nav {
+        padding: 0 2rem;
+    }
+
+    header nav span {
+        font-size: 1rem;
+        margin-left: 1rem;
+    }
+
+    .card .card-header {
+        font-size: 1.1rem;
+    }
+
+    div.input input:not([type='checkbox']) {
+        width: 90%;
+    }
+
+    div.remember-password {
+        width: 90%;
+    }
+
+    div.input button {
+        width: 90%;
+        font-size: 1rem;
+    }
+
+    div.details {
+        font-size: 0.8rem;
+    }
+}
