@@ -43,15 +43,6 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
-             'banco_rh' => [
-             'driver'  => 'oracle',
-             'tns'    => '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = ' . env('DB_HOST_RH') . ')(PORT = 1521)) (CONNECT_DATA  = (SERVICE_NAME = ' . env('DB_SERVICE_NAME_RH') . ')))',
-            'database'      => '',
-             'username'      => env('DB_USERNAME_RH'),
-             'password'      => env('DB_PASSWORD_RH'),
-
-         ],
-
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
@@ -71,17 +62,6 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
-
-        // 'banco_rh' => [
-        //     'driver'        => 'oracle',
-        //     'tns'           => '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.0.131)(PORT = 1521)) (CONNECT_DATA = (SERVICE_NAME = hml)))',
-        //     'database'      => '',
-        //     'username'      => env('DB_USERNAME_RH'),
-        //     'password'      => env('DB_PASSWORD_RH'),
-
-        // ],
-
-    
 
         'pgsql' => [
             'driver' => 'pgsql',
