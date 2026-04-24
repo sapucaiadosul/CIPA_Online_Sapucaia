@@ -68,6 +68,12 @@
                                 <p>Menu Inicial</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/importacoes">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                                <p>Importar</p>
+                            </a>
+                        </li>
                         <li class="nav-item {{ (request()->is('Candidato_Create')) || (request()->is('Candidato_Listar'))  ? 'active' : '' }}">
                             <a data-toggle="collapse" aria-controls="collapseOne" href="#base">
                                 <i class="fas fa-users"></i>
