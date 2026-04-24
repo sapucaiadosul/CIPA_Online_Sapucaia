@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^4.0",
         "owen-it/laravel-auditing": "^14.0",
+        "phpoffice/phpspreadsheet": "^5.7",
         "proengsoft/laravel-jsvalidation": "^4.8",
         "realrashid/sweet-alert": "^7.2",
         "yajra/laravel-oci8": "^12"
