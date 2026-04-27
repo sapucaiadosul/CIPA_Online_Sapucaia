@@ -38,7 +38,6 @@ use Illuminate\Support\Facades\Auth;
     Route::post('/votacao/login','VotacaoController@login_votacao')->name('Votacao_Login');
     Route::get('/votacao/novo','VotacaoController@create')->name('Votacao_Create');
     Route::get('/votacao/verifica','VotacaoController@verificarPeriodoVotacao')->name('verificar_periodo_votacao');
-   // Route::post('/votacao/salvar','VotacaoController@store')->name('Votacao_Store');
     Route::post('/votacao/mostrar_candidatos','VotacaoController@mostrar_candidatos')->name('Votacao_MostrarCandidatos');
     Route::get('/votacao/resultados','VotacaoController@resultados')->name('Votacao_Resultados');
 
