@@ -7,6 +7,7 @@ use App\Votacoes;
 use App\Eleicoes;
 use App\Eleitor;
 use App\Candidatos;
+use App\Servidor;
 use App\Usuario;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -35,7 +36,7 @@ class VotacaoController extends Controller
             return redirect()->route('Votacao_Index')->with('NaoVota', '402');
 
         $matricula = $request->input('matricula');
-        $cpf = $request->input('cpf');
+
         if ($request->input('cpf')) {
             $cpfSanitizado = str_replace(array('.', '-'), '', $request->input('cpf'));
             $request->merge([
@@ -44,7 +45,8 @@ class VotacaoController extends Controller
         }
 
         $jaVotou = DB::table('votacoes')
-            ->where('eleitor_matricula', $matricula)
+            ->join('servidores', 'votacoes.servidor_id', '=', 'servidor_id')
+            ->where('servidores.matricula', $matricula)
             ->where('eleicoes_id', $eleicao_id)
             ->count();
 
@@ -52,46 +54,14 @@ class VotacaoController extends Controller
         if ($jaVotou > 0)
             return redirect()->route('Votacao_Index')->with('JaVotou', '402');
 
-        $import = DB::connection('banco_rh')->select(
-            'select serv.CD_MATRICULA MATRICULA, p.NM_COMPLETO NOME, p.NR_CPF CPF, p.DT_NASCIMENTO, 
-        vinc.CD_VINCULO, vinc.VINCULO,cargo.DS_CARGO, LOTACAO.DEPARTAMENTO, LOTACAO.SECRETARIA 
-        from RHSLEO.WIZ_RHF_SERVIDORES serv, RHSLEO.WIZ_COR_PESSOAS p, RHSLEO.WIV_RHF_SERVIDORES_VINCULO vinc, RHSLEO.WIZ_RHF_CARGOS cargo, 
-        RHSLEO.WIZ_RHF_SERVIDOR_CARGOS serv_carg,
-         (select serv_custos.ID_SERV, custos.nome as DEPARTAMENTO, serv_custos.DT_INIC, serv_custos.DT_FINAL, sec.nome as SECRETARIA
-        from RHSLEO.WIZ_RHF_SERVIDOR_CCUSTOS serv_custos, RHSLEO.WIZ_COR_CENTRO_CUSTOS custos, RHSLEO.WIZ_COR_CENTRO_CUSTOS sec
-        where Serv_Custos.Ccst_Sequencia = Custos.Ccst_Sequencia
-        AND custos.CCST_SEQUENCIA = serv_custos.CCST_SEQUENCIA
-        and sec.ID_FILL (+)= custos.ID_FILL 
-        and sec.CD_ESTRUT (+)= SUBSTR(custos.CD_ESTRUT,0,10)
-        and serv_custos.IN_LOTACAO = ? 
-        ) LOTACAO
-        where serv.ID_PESS = p.ID_PESS
-        and serv.ST_SERVIDOR = 1
-        and vinc.ID_SERV = serv.ID_SERV
-        and serv_carg.ID_SERV = serv.ID_SERV 
-        and cargo.ID_CARG = serv_carg.ID_CARG 
-        and serv_carg.DT_FINAL is null
-        and LOTACAO.ID_SERV = serv.ID_SERV 
-        and LOTACAO.DT_FINAL is null
-        and serv.CD_MATRICULA = ?
-        and p.NR_CPF = ?',
-            ['E', $matricula, $cpfSanitizado]
-        );
-        if ($import) {
-            $eleitor = new Eleitor;
-            $eleitor->matricula = $import[0]->matricula;
-            $eleitor->cpf = $import[0]->cpf;
-            $eleitor->nome =  $import[0]->nome;
-            $eleitor->dt_nascimento =  $import[0]->dt_nascimento;
-            $eleitor->cd_vinculo = $import[0]->cd_vinculo;
-            $eleitor->vinculo = $import[0]->vinculo;
-            $eleitor->ds_cargo =  $import[0]->ds_cargo;
-            $eleitor->departamento =  $import[0]->departamento;
-            $eleitor->secretaria =  $import[0]->secretaria;
-            Session::put('eleitor_nome', $eleitor->nome);
-            Session::put('eleitor_cpf', $eleitor->cpf);
+        $servidor = Servidor::where('matricula', $matricula)
+            ->where('cpf', $cpfSanitizado)
+            ->first();
+
+        if ($servidor) {
+            Session::put('servidor_id', $servidor->id);
             $candidatos = candidatos::where('eleicoes_id', $eleicoes->id)->where('status', 1)->get();
-            return view('votacao.votacao', ['eleitor' => $eleitor, 'eleicoes' => $eleicoes, 'candidatos' => $candidatos]);
+            return view('votacao.votacao', ['servidor' => $servidor, 'eleicoes' => $eleicoes, 'candidatos' => $candidatos]);
         } else {
             return redirect()->back()->with('error', '404');
         }
@@ -129,12 +99,13 @@ class VotacaoController extends Controller
             ->where('dt_votacao_de', '<=', Carbon::now())
             ->where('dt_votacao_ate', '>=', Carbon::now())
             ->first();
+
         if (!$eleicoes) {
             return response()->json(['error' => 'Você está fora do periodo de votação!'], 400);
         }
 
-
         $cadastro = new votacoes();
+
         $tipo = $request->input('tipo');
         if ($tipo == 'V') {
             $cadastro->tipo_voto = 'V';
@@ -147,29 +118,23 @@ class VotacaoController extends Controller
             $cadastro->voto_candidato_id = Null;
         }
         $cadastro->eleicoes_id = $request->input('eleicoes_id');
-        $cadastro->eleitor_matricula = $request->input('matricula');
-        $cadastro->eleitor_nome = $request->input('nome');
-        $cadastro->eleitor_cpf = $request->input('cpf');
-        $cadastro->eleitor_lotacao = $request->input('lotacao');
-        $cadastro->eleitor_cargo_funcao = $request->input('cargo_funcao');
-        // $cadastro->eleitor_IP_acesso = '1.1.2.55.0';
-        $cadastro->eleitor_IP_acesso = $request->ip();
-        // $cadastro->eleitor_IP_acesso = $request->input('eleitor_IP_acesso');
+        $cadastro->servidor_id = $request->input('servidor_id');
+        $cadastro->servidor_IP_acesso = $request->ip();
         $cadastro->save();
         return response()->json($cadastro);
     }
 
     public function comprovante($id)
     {
-        $pdf_voto = votacoes::find($id);
-        $eleicoes = eleicoes::all();
+        $servidor_id = session()->get('servidor_id');
 
-        $eleitor_nome = session()->get('eleitor_nome');
-        $eleitor_cpf = session()->get('eleitor_cpf');
+        $pdf_voto = votacoes::with('servidor')
+        ->where('servidor_id', $servidor_id)
+        ->first();
 
         $eleicao = eleicoes::find($pdf_voto->eleicoes_id);
 
-        $pdf = Pdf::loadView('votacao.pdf_comprovante', compact('pdf_voto', 'eleicoes', 'eleitor_nome', 'eleitor_cpf', 'eleicao'));
+        $pdf = Pdf::loadView('votacao.pdf_comprovante', compact('pdf_voto', 'eleicao'));
         $pdf->setPaper('A4', 'portrait');
         return $pdf->stream('Comprovante_Voto.pdf');
     }
@@ -212,8 +177,8 @@ class VotacaoController extends Controller
                 ->count();
 
             $nr_votos = DB::table('votacoes')
-            ->where('eleicoes_id', $ultima_eleicao->id)
-            ->count();
+                ->where('eleicoes_id', $ultima_eleicao->id)
+                ->count();
 
             $votacao_candidatos = DB::table('votacoes')
                 ->join('candidatos', 'votacoes.voto_candidato_id', '=', 'candidatos.id')
@@ -280,32 +245,32 @@ class VotacaoController extends Controller
             ->count();
 
         $votacao_candidatos = DB::table('votacoes')
-                ->join('candidatos', 'votacoes.voto_candidato_id', '=', 'candidatos.id')
-                ->select(
-                    'votacoes.voto_candidato_id',
-                    'candidatos.nome',
-                    'candidatos.cpf',
-                    'candidatos.apelido',
-                    'candidatos.lotacao',
-                    'candidatos.matricula',
-                    'candidatos.cargo_funcao',
-                    'candidatos.foto',
-                    DB::raw('count(*) as qtd_voto_candidato')
-                )
-                ->where('votacoes.eleicoes_id', $eleicaoId)
-                ->where('tipo_voto', '=', 'V')
-                ->groupBy(
-                    'votacoes.voto_candidato_id',
-                    'candidatos.nome',
-                    'candidatos.cpf',
-                    'candidatos.apelido',
-                    'candidatos.lotacao',
-                    'candidatos.matricula',
-                    'candidatos.cargo_funcao',
-                    'candidatos.foto'
-                )
-                ->orderBy('qtd_voto_candidato', 'DESC')
-                ->get();
+            ->join('candidatos', 'votacoes.voto_candidato_id', '=', 'candidatos.id')
+            ->select(
+                'votacoes.voto_candidato_id',
+                'candidatos.nome',
+                'candidatos.cpf',
+                'candidatos.apelido',
+                'candidatos.lotacao',
+                'candidatos.matricula',
+                'candidatos.cargo_funcao',
+                'candidatos.foto',
+                DB::raw('count(*) as qtd_voto_candidato')
+            )
+            ->where('votacoes.eleicoes_id', $eleicaoId)
+            ->where('tipo_voto', '=', 'V')
+            ->groupBy(
+                'votacoes.voto_candidato_id',
+                'candidatos.nome',
+                'candidatos.cpf',
+                'candidatos.apelido',
+                'candidatos.lotacao',
+                'candidatos.matricula',
+                'candidatos.cargo_funcao',
+                'candidatos.foto'
+            )
+            ->orderBy('qtd_voto_candidato', 'DESC')
+            ->get();
 
         return view('admin.votacao.acompanhamento', compact(
             'eleicoes',
@@ -332,7 +297,7 @@ class VotacaoController extends Controller
             ->where('eleicoes_id', $eleicao->id)
             ->where('tipo_voto', 'N')
             ->count();
-        
+
         $voto_valido = DB::table('votacoes')
             ->where('eleicoes_id', $eleicao->id)
             ->where('tipo_voto', 'V')
@@ -368,15 +333,17 @@ class VotacaoController extends Controller
             ->orderByDesc('qtd_votos')
             ->get();
 
-        $pdf = Pdf::loadView('votacao.pdf_resultados',
-        compact(
-            'eleicao', 
-            'voto_branco',
-            'voto_nulo',
-            'voto_valido',
-            'nr_votos', 
-            'votacao_candidatos'
-        ));
+        $pdf = Pdf::loadView(
+            'votacao.pdf_resultados',
+            compact(
+                'eleicao',
+                'voto_branco',
+                'voto_nulo',
+                'voto_valido',
+                'nr_votos',
+                'votacao_candidatos'
+            )
+        );
 
         $pdf->setPaper('A4', 'portrait');
 
