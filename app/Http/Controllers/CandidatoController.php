@@ -19,19 +19,8 @@ class CandidatoController extends Controller
 {
     public function index(Request $request)
     {
-        $eleicaoId = $request->input('eleicao_id');
-
-        if ($eleicaoId) {
-            $candidatos = Candidatos::where('eleicoes_id', $eleicaoId)->get();
-        } else {
-            $ultimaEleicao = Eleicoes::orderBy('id', 'desc')->first();
-            $candidatos = Candidatos::where('eleicoes_id', $ultimaEleicao->id);
-            $eleicaoId = $ultimaEleicao->id;
-        }
-
-        $eleicoes = Eleicoes::all();
-
-        return view('candidato.login_candidato', compact('candidatos', 'eleicoes', 'eleicaoId'))->with('success', 'Por favor, faça login para acessar o sistema.');
+     
+        return view('candidato.login_candidato');
     }
 
     public function login_candidato(Request $request)
