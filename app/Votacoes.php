@@ -15,13 +15,23 @@ class Votacoes extends Model implements AuditableContract
 {
   use \OwenIt\Auditing\Auditable;
 
+  protected $table = 'votacoes';
+
   protected $fillable = [
-    'voto_candidato_id', 'tipo_voto', 'votacao_realizada','eleitor_matricula',
-    'eleitor_nome', 'eleitor_cpf', 'eleitor_lotacao', 'eleitor_cargo_funcao', 'eleitor_IP_acesso',
+    'voto_candidato_id',
+    'tipo_voto',
+    'eleicoes_id',
+    'servidor_id',
+    'servidor_IP_acesso',
   ];
+
+  public function servidor()
+  {
+    return $this->belongsTo(Servidor::class);
+  }
 
   public function busca_candidato()
   {
-    return $this->belongsTo(Candidatos::class,'voto_candidato_id','id');
-  }    
+    return $this->belongsTo(Candidatos::class, 'voto_candidato_id', 'id');
+  }
 }
