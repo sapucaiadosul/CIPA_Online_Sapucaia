@@ -13,6 +13,8 @@ return new class extends Migration
             $table->string('nome');
             $table->string('matricula')->unique();
             $table->string('cpf')->unique();
+            $table->date('dt_nascimento');
+            $table->string('vinculo');
             $table->timestamps();
         });
     }
