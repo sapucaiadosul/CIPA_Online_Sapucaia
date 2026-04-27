@@ -14,6 +14,13 @@ class Servidor extends Model
     protected $fillable = [
         'nome',
         'cpf',
-        'matricula'
+        'matricula',
+        'dt_nascimento',
+        'vinculo',
     ];
+
+    public function votacoes()
+    {
+        return $this->hasMany(Votacoes::class);
+    }
 }
