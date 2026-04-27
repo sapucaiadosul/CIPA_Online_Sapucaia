@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Candidatos;
 use App\Eleicoes;
 use App\Http\Requests\CandidatoRequest;
+use App\Servidor;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Validator;
@@ -35,13 +36,6 @@ class CandidatoController extends Controller
 
     public function login_candidato(Request $request)
     {
-
-        try {
-            DB::connection('banco_rh');
-        } catch (\Throwable $e) {
-            return redirect()->back()->with('NaoConectouBanco', '404');
-        }
-
         $matriculaCandidato = $request->input('matricula');
 
         $eleicao_id = DB::table('eleicoes')->max('id');
@@ -63,66 +57,27 @@ class CandidatoController extends Controller
 
         $matricula = $request->input('matricula');
         $datanasc = $request->input('datanasc');
-        $formato_data = 'DD/MM/YYYY';
-        $datanasc = Carbon::createFromFormat('Y-m-d', $datanasc)->format('d-m-Y');
+        $datanasc = Carbon::createFromFormat('Y-m-d', $datanasc);
 
-        $import = DB::connection('banco_rh')->select(
-            'select serv.CD_MATRICULA MATRICULA, p.NM_COMPLETO NOME, p.NR_CPF CPF, p.DT_NASCIMENTO, serv.DT_ADMISSAO, vinc.CD_VINCULO, vinc.VINCULO,cargo.DS_CARGO, 
-        LOTACAO.DEPARTAMENTO, LOTACAO.SECRETARIA, 
-        (Case when PORTARIA_ESTAGIO.ID_DOCS is not null then ? else ? end) POSSUI_PORTARIA, trunc(CURRENT_DATE - serv.DT_ADMISSAO) DIAS_SERVICO
-        from RHSLEO.WIZ_RHF_SERVIDORES serv, RHSLEO.WIZ_COR_PESSOAS p, RHSLEO.WIV_RHF_SERVIDORES_VINCULO vinc, RHSLEO.WIZ_RHF_CARGOS cargo, 
-        RHSLEO.WIZ_RHF_SERVIDOR_CARGOS serv_carg,
-         (select serv_custos.ID_SERV, custos.nome as DEPARTAMENTO, serv_custos.DT_INIC, serv_custos.DT_FINAL, sec.nome as SECRETARIA
-        from RHSLEO.WIZ_RHF_SERVIDOR_CCUSTOS serv_custos, RHSLEO.WIZ_COR_CENTRO_CUSTOS custos, RHSLEO.WIZ_COR_CENTRO_CUSTOS sec
-        where Serv_Custos.Ccst_Sequencia = Custos.Ccst_Sequencia
-        AND custos.CCST_SEQUENCIA = serv_custos.CCST_SEQUENCIA
-        and sec.ID_FILL (+)= custos.ID_FILL 
-        and sec.CD_ESTRUT (+)= SUBSTR(custos.CD_ESTRUT,0,10) 
-        and serv_custos.IN_LOTACAO = ?
-         ) LOTACAO,
-        (select serv_docs.ID_SERV, docs.ID_DOCS, docs.ID_ASSU, docs.DS_EMENTA from RHSLEO.WIZ_RHF_SERVIDOR_DOCUMENTOS serv_docs, RHSLEO.WIZ_RHF_DOCUMENTOS docs
-        where serv_docs.ID_DOCS = docs.ID_DOCS and docs.ID_ASSU = 87 and docs.ST_DOC = ?) PORTARIA_ESTAGIO
-        where serv.ID_PESS = p.ID_PESS
-        and serv.ST_SERVIDOR = 1
-        and vinc.ID_SERV = serv.ID_SERV
-        and serv_carg.ID_SERV = serv.ID_SERV 
-        and cargo.ID_CARG = serv_carg.ID_CARG 
-        and serv_carg.DT_FINAL is null
-        and LOTACAO.ID_SERV = serv.ID_SERV 
-        and LOTACAO.DT_FINAL is null
-        and serv.CD_MATRICULA = ?
-        and p.DT_NASCIMENTO = to_date(?,?)
-        and PORTARIA_ESTAGIO.ID_SERV (+)= serv.ID_SERV',
-            ['S', 'N', 'E', 'A',  $matricula, $datanasc, $formato_data]
-        );
+        $servidor = Servidor::where('matricula', $matricula)
+            ->whereDate('dt_nascimento', $datanasc)
+            ->first();
 
         $candidatoAutenticado = new candidatos;
 
-        if ($import) {
-            $candidatoAutenticado->matricula = $import[0]->matricula;
-            $candidatoAutenticado->cpf = $import[0]->cpf;
-            $candidatoAutenticado->nome = $import[0]->nome;
-            $dt_nascimento = \Carbon\Carbon::parse($import[0]->dt_nascimento)->format('Y-m-d');
+        if ($servidor) {
+            $candidatoAutenticado->matricula = $servidor->matricula;
+            $candidatoAutenticado->cpf = $servidor->cpf;
+            $candidatoAutenticado->nome = $servidor->nome;
+            $dt_nascimento = \Carbon\Carbon::parse($servidor->dt_nascimento)->format('Y-m-d');
             $candidatoAutenticado->dt_nascimento = $dt_nascimento;
-            $candidatoAutenticado->cd_vinculo = $import[0]->cd_vinculo;
-            $candidatoAutenticado->vinculo = $import[0]->vinculo;
-            $candidatoAutenticado->ds_cargo = $import[0]->ds_cargo;
-            $candidatoAutenticado->departamento = $import[0]->departamento;
-            $candidatoAutenticado->secretaria = $import[0]->secretaria;
-            $candidatoAutenticado->possui_portaria = $import[0]->possui_portaria;
-            $candidatoAutenticado->dias_servico = $import[0]->dias_servico;
+            $candidatoAutenticado->vinculo = $servidor->vinculo;
         } else {
             return redirect()->back()->with('NaoAchou', '404');
         }
 
-        if ($candidatoAutenticado->cd_vinculo != '1' && $candidatoAutenticado->cd_vinculo != '2') {
+        if ($candidatoAutenticado->vinculo != 'Estatutario' && $candidatoAutenticado->vinculo != 'CLT Urb.Indet.P.Jur.') {
             return redirect()->back()->with('VinculoNaoPermitido', '404');
-        } else if (
-            $candidatoAutenticado->cd_vinculo  == '2' &&
-            $candidatoAutenticado->possui_portaria == 'N' &&
-            $candidatoAutenticado->dias_servico <= 1095
-        ) {
-            return redirect()->back()->with('SemEstabilidade', '404');
         }
 
         if ($eleicao) {
