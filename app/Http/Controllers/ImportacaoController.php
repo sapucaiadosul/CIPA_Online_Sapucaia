@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Servidor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ImportacaoController extends Controller
@@ -34,10 +35,12 @@ class ImportacaoController extends Controller
         foreach($dataArray as $index => $coluna){
             if ($index === 0) continue;
 
-            Servidor::create([
+            Servidor::updateOrCreate([
                 'nome' => $coluna[0],
                 'cpf' => preg_replace('/\D/', '', $coluna[1]),
                 'matricula' => preg_replace('/\D/', '', $coluna[2]),
+                'dt_nascimento' => Carbon::createFromFormat('d/m/Y', $coluna[3])->format('Y-m-d'),
+                'vinculo' => $coluna[4],
             ]);
         }
 
