@@ -26,7 +26,9 @@ class CandidatoRequest extends FormRequest
         return [
             'email' => ['required', 'email:rfc,dns', 'ends_with:com,net,org,br,gov,edu,mil,biz'],
             'apelido' => ['required'],
-            'telefone' => ['required']
+            'telefone' => ['required'],
+            'lotacao' => 'required',
+            'cargo_funcao' => 'required'
         ];
     }
     
