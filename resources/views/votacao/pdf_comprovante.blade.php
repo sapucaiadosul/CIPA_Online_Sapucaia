@@ -91,11 +91,11 @@
                 <tr>
                     <td style="width: 100%"><strong>SEUS DADOS </strong>
                 </tr>
-                <td style="width: 100%"><strong>Matrícula: </strong>{{ $pdf_voto->eleitor_matricula }}</td>
+                <td style="width: 100%"><strong>Matrícula: </strong>{{ $pdf_voto->servidor->matricula }}</td>
                 <tr>
-                    <td style="width: 100%"><strong>Nome: </strong>{{ $eleitor_nome }}</td>
+                    <td style="width: 100%"><strong>Nome: </strong>{{ $pdf_voto->servidor->nome }}</td>
                 <tr>
-                    <td style="width: 100%"><strong>CPF: </strong>{{ substr($eleitor_cpf,0,3).'.'.substr($eleitor_cpf,3,3).'.'.substr($eleitor_cpf,6,3).'-'.substr($eleitor_cpf,9,2)}}</td>
+                    <td style="width: 100%"><strong>CPF: </strong>{{ substr($pdf_voto->servidor->cpf,0,3).'.'.substr($pdf_voto->servidor->cpf,3,3).'.'.substr($pdf_voto->servidor->cpf,6,3).'-'.substr($pdf_voto->servidor->cpf,9,2)}}</td>
                 </tr>
                 <br>
                 <tr>
