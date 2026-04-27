@@ -90,7 +90,7 @@
                                         </div>
                                         @endif
                                         <div class="form-section">
-                                            <label for="matricula">Matrícula (RH):</label>
+                                            <label for="matricula">Matrícula:</label>
                                             <input type="text" class="form-control mb-3" name="matricula" id="matricula" required="">
                                             <label for="datanasc">Data de nascimento:</label>
                                             <input type="date" class="form-control" name="datanasc" id="datanasc" required="">

@@ -63,7 +63,7 @@
                                         </div>
                                         @endif
                                         <div class="form-section">
-                                            <label for="user">Matrícula (RH):</label>
+                                            <label for="user">Matrícula:</label>
                                             <input type="text" class="form-control mb-3" name="matricula" id="matricula" required="">
                                             <label for="registration">CPF:</label>
                                             <input type="text" class="form-control" name="cpf" id="cpf" required="">
