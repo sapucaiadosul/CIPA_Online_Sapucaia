@@ -113,17 +113,23 @@
                                 <div class="form-group col-12 col-md-6">
                                     <label for="lotacao" class="control-label">Lotação:</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="lotacao" name="lotacao" readonly placeholder="Lotação" value="{{ $candidatoAutenticado->departamento }}">
+                                        <input type="text" class="form-control" id="lotacao" name="lotacao" placeholder="Lotação"
+                                        value="{{ old('lotacao') }}">
                                     </div>
                                 </div>
                                 <div class="form-group col-12 col-md-6">
                                     <label for="cargo_funcao" class="control-label">Cargo/Função:</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="cargo_funcao" name="cargo_funcao" readonly placeholder="Cargo/Função" value="{{ $candidatoAutenticado->ds_cargo }}">
+                                        <input type="text" class="form-control" id="cargo_funcao" name="cargo_funcao" placeholder="Cargo/Função"
+                                        value="{{ old('cargo_funcao') }}">
                                     </div>
                                 </div>
-
-                                <input type="text" class="form-control" id="cd_vinculo" name="cd_vinculo" value="{{ $candidatoAutenticado->cd_vinculo }}" hidden>
+                                <div class="form-group col-12 col-md-6">
+                                    <label for="cargo_funcao" class="control-label">Vínculo:</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="vinculo" name="vinculo" value="{{ $candidatoAutenticado->vinculo }}" readonly>
+                                    </div>
+                                </div>
 
                                 <div class="form-group col-12 col-md-6">
                                     <label for="nome" class="control-label">Apelido:</label>
