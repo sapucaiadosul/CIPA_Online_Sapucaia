@@ -74,7 +74,7 @@
 <body>
     <header>
         <div align="center">
-            <img src="{{ public_path('assets/img/logo_prefeitura.png') }}" style="width:129px;height:129px;float:
+            <img src="{{ public_path('assets/img/logo_prefeitura.png') }}" style="width:129px;height:auto;float:
                 left;z-index:10000; margin-top: 1px; margin-left: 1px" />
 
             <img src="{{ public_path('assets/img/logo_cipa.png') }}" style="width:75px;height:75px;float:

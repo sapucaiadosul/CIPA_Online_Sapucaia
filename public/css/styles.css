@@ -1,6 +1,8 @@
 .img-navbar {
-    height: 65px;
-    width: 52px;
+    width: auto;
+    height: auto;
+    max-width: 52px;
+    max-height: 65px;
 }
 
 a.brand-logo.nav-title {
