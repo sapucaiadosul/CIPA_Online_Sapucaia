@@ -37,8 +37,8 @@ class ImportacaoController extends Controller
 
             Servidor::updateOrCreate([
                 'nome' => $coluna[0],
-                'cpf' => preg_replace('/\D/', '', $coluna[1]),
-                'matricula' => preg_replace('/\D/', '', $coluna[2]),
+                'matricula' => preg_replace('/\D/', '', $coluna[1]),
+                'cpf' => preg_replace('/\D/', '', $coluna[2]),
                 'dt_nascimento' => Carbon::createFromFormat('d/m/Y', $coluna[3])->format('Y-m-d'),
                 'vinculo' => $coluna[4],
             ]);
