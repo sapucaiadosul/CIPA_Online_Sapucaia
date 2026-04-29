@@ -99,7 +99,7 @@
             right;z-index:10000; margin-top: 10px; margin-right: 1px" />
 
         <div align="center">
-            <h6>PREFEITURA MUNICIPAL DE SÃO LEOPOLDO</h6>
+            <h6>PREFEITURA MUNICIPAL DE SAPUCAIA DO SUL</h6>
             <h6>Estado do Rio Grande do Sul</h6>
             <h6>SESMT - SERVIÇOS ESPECIALIZADOS EM SEGURANÇA E</h6>
             <h6>EM MEDICINA DO TRABALHO</h6>
@@ -162,7 +162,7 @@
     @endforeach
     <footer>
                 <div class="footer">
-                    <span> Prefeitura de São Leopoldo </span><br>
+                    <span> Prefeitura Municipal de Sapucaia do Sul </span><br>
                     <span> Avenida Dom João Becker, 754 - Centro - CEP 93010-010 </span><br>
                     <span> (51) 2200-0213 </span></br>
                     <span> 'São Leopoldo, Berço da Colonização Alemã no Brasil' <span>

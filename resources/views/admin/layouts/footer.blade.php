@@ -1,7 +1,7 @@
 <footer class="footer" style="background-color:white !important">
     <div class="container-fluid" >
         <div class="copyright ml-auto">
-            <h5 style="color: grey;">{{ date('Y') }} &copy; Coordenadoria Geral de TIC - PMSL</h5>
+            <h5 style="color: grey;">{{ date('Y') }} &copy; Diretoria de Informática - PM Sapucaia do Sul</h5>
         </div>
     </div>
 </footer>

@@ -137,12 +137,12 @@ class CandidatoController extends Controller
         $cadastro->status = 0;  // Pendente
         $cadastro->save();
 
-        $foto_base64_string = explode(",", $foto_string_original);
+        $foto_base64_string = explode(",", (string) $foto_string_original);
 
-        if ($foto_base64_string) {
+        if (count($foto_base64_string) > 1) {
             $arquivoComCaminho = 'arquivos/fotos/foto_' .  $cadastro->id . '.png';
             $cadastro->foto = $arquivoComCaminho;
-            Storage::put($cadastro->foto, base64_decode($foto_base64_string[1]));
+            Storage::disk('public')->put($cadastro->foto, base64_decode($foto_base64_string[1]));
             $cadastro->update();
         }
         return view('candidato.inscricao_concluida', ['candidato_id' => $cadastro->id]);
@@ -192,10 +192,10 @@ class CandidatoController extends Controller
             ]);
 
             if ($request->hasFile('foto')) {
-                if ($candidato->foto && Storage::exists($candidato->foto)) {
-                    Storage::delete($candidato->foto);
+                if ($candidato->foto && Storage::disk('public')->exists($candidato->foto)) {
+                    Storage::disk('public')->delete($candidato->foto);
                 }
-                $candidato->foto = $request->foto->store('arquivos/fotos');
+                $candidato->foto = $request->foto->store('arquivos/fotos', 'public');
                 $candidato->update();
             }
             return redirect()->route('Candidato_Listar')->with('EditarCandidato', '402');

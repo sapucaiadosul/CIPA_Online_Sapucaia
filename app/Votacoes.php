@@ -22,7 +22,13 @@ class Votacoes extends Model implements AuditableContract
     'tipo_voto',
     'eleicoes_id',
     'servidor_id',
-    'servidor_IP_acesso',
+    'servidor_ip_acesso',
+  ];
+
+  protected $casts = [
+    'voto_candidato_id' => 'integer',
+    'eleicoes_id' => 'integer',
+    'servidor_id' => 'integer',
   ];
 
   public function servidor()

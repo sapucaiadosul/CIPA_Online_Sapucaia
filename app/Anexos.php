@@ -17,9 +17,13 @@ class Anexos extends Model implements AuditableContract
 
     protected $fillable = ['origem_id','arquivo','tipo', 'nome_original', 'eleicoes_id'];  
 
+    protected $casts = [
+        'origem_id' => 'integer',
+    ];
+
     public function Eleicoes()
     {
-        return $this->belongsTo(Eleicoes::class);
+        return $this->belongsTo(Eleicoes::class, 'origem_id', 'id');
     }
 }
  

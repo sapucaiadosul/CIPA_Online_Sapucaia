@@ -7,6 +7,7 @@
     Swal.fire({
         icon: 'success',
         title: 'Importação realizada com sucesso!',
+        text: 'Importados: {{ session('Importados', 0) }} | Ignorados: {{ session('Ignorados', 0) }}',
         showConfirmButton: false,
         timer: 3000
     })

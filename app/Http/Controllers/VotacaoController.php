@@ -45,7 +45,7 @@ class VotacaoController extends Controller
         }
 
         $jaVotou = DB::table('votacoes')
-            ->join('servidores', 'votacoes.servidor_id', '=', 'servidor_id')
+            ->join('servidores', 'votacoes.servidor_id', '=', 'servidores.id')
             ->where('servidores.matricula', $matricula)
             ->where('eleicoes_id', $eleicao_id)
             ->count();
@@ -119,7 +119,7 @@ class VotacaoController extends Controller
         }
         $cadastro->eleicoes_id = $request->input('eleicoes_id');
         $cadastro->servidor_id = $request->input('servidor_id');
-        $cadastro->servidor_IP_acesso = $request->ip();
+        $cadastro->servidor_ip_acesso = $request->ip();
         $cadastro->save();
         return response()->json($cadastro);
     }

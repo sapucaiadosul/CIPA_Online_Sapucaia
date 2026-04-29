@@ -123,8 +123,7 @@
                 {
                     data: null,
                     render: function(data, type, row) {
-                        var caminhorecebeFoto = "{{asset("
-                        storage ")." / "}}" + data.foto;
+                        var caminhorecebeFoto = "{{ asset('storage') }}/" + data.foto;
                         return '<img  class="foto" style="height:150px" src="' + caminhorecebeFoto + '">'
                     }
                 },
@@ -184,15 +183,23 @@
                 //escondeSelect();
                 //mostramensagem();
 
-            }).fail(function(err) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Algo saiu Errado!',
-                    text: "Matrícula Logada já Votou nesta Eleição!",
-                    showConfirmButton: false,
-                    timer: 3000
+                }).fail(function(err) {
+                    let mensagem = 'Voto não realizado. Verifique os dados e tente novamente.';
+
+                    if (err.responseJSON && err.responseJSON.error) {
+                        mensagem = err.responseJSON.error;
+                    } else if (err.responseJSON && err.responseJSON.message) {
+                        mensagem = err.responseJSON.message;
+                    }
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Algo saiu Errado!',
+                        text: mensagem,
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
                 });
-            });
             //window.location = "/votacao/comprovante"
             // prosseguir com a execução
         } else {

@@ -83,7 +83,7 @@
 </body>
 
 <div style="position: absolute; bottom: 5%; text-align: center; width: 100%">
-  {{ date('Y') }} &copy; Coordenadoria Geral de TIC - PMSL</li>
+  {{ date('Y') }} &copy; Diretoria de Informática - PM Sapucaia do Sul</li>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"
