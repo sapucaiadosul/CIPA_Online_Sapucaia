@@ -32,6 +32,10 @@ use Illuminate\Support\Facades\Auth;
 
     // Rotas utilizadas na importação de servidores
     Route::get('/importacoes', 'ImportacaoController@index')->name('importacoes')->middleware('auth');
+
+    // Edição de servidores
+    Route::get('/servidores/{id}/edit', 'ServidorController@edit')->name('Servidor_Edit')->middleware('auth');
+    Route::put('/servidores/{id}', 'ServidorController@update')->name('Servidor_Update')->middleware('auth');
     Route::post('/importar-servidor', 'ImportacaoController@importar_servidor')->middleware('auth');
 
     Route::get('/votacao','VotacaoController@index')->name('Votacao_Index');
