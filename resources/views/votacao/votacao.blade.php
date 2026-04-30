@@ -97,8 +97,11 @@
             '<div style="padding: 25px;text-align: center;color: #7c7c7c;">' +
             '<p><strong>Voto registrado com sucesso!</strong></p>' +
             '<p>Clique no botão abaixo para gerar o comprovante.</p>' +
+            '<div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">' +
             '<a class="btn btn-primary botao" href="' +
-            rota_final + '" style="background: #e57373!important;border: 0px;">Gerar comprovante</a>' +
+            rota_final + '" target="_blank" rel="noopener noreferrer" style="background: #e57373!important;border: 0px;">Gerar comprovante</a>' +
+            '<a class="btn btn-secondary botao" href="{{ route('Votacao_Index') }}" style="border: 0px;">Voltar</a>' +
+            '</div>' +
             '</div>' +
             '</div>';
 

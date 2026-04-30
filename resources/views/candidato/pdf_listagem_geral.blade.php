@@ -90,26 +90,26 @@
     }
 </style>
 
-
-    <div align="center">
-        <img src="{{ public_path('assets/img/logo_prefeitura.png') }}" style="width:129px;height:auto;float:
-            left;z-index:10000; margin-top: 1px; margin-left: 1px" />
-
-        <img src="{{ public_path('assets/img/logo_cipa.png') }}" style="width:75px;height:75px;float:
-            right;z-index:10000; margin-top: 10px; margin-right: 1px" />
-
-        <div align="center">
-            <h6>PREFEITURA MUNICIPAL DE SAPUCAIA DO SUL</h6>
-            <h6>Estado do Rio Grande do Sul</h6>
-            <h6>SESMT - SERVIÇOS ESPECIALIZADOS EM SEGURANÇA E</h6>
-            <h6>EM MEDICINA DO TRABALHO</h6>
-            <h6>Avenida Dom João Becker, 754 - Centro - São Leopoldo</h6>
-            <h6>(51) 2200-0204</h6>
-            <h6>sesmt@saoleopoldo.rs.gov.br</h6>
-            <h6>{{ $eleicoes->descricao_eleicao }}</h6>
-            <h6>LISTAGEM GERAL DOS CANDIDATOS</h6>
-        </div>
-    </div>
+    <table style="width:100%; border-collapse:collapse;">
+        <tr>
+            <td style="width:18%; text-align:left; vertical-align:top;">
+                <img src="{{ public_path('assets/img/logo_prefeitura.png') }}" style="width:129px;height:auto; margin-top: 1px; margin-left: 1px" />
+            </td>
+            <td style="width:64%; text-align:center; vertical-align:top;">
+                <h6>PREFEITURA MUNICIPAL DE SAPUCAIA DO SUL</h6>
+                <h6>Estado do Rio Grande do Sul</h6>
+                <h6>SETOR DE SEGURANÇA DO TRABALHO</h6>
+                <h6>Av. Leônidas de Souza 128 - Bairro: Santa Catarina - Sapucaia do Sul</h6>
+                <h6>(51) 3451-8062</h6>
+                <h6>sesmt@saoleopoldo.rs.gov.br</h6>
+                <h6>{{ $eleicoes->descricao_eleicao }}</h6>
+                <h6>LISTAGEM GERAL DOS CANDIDATOS</h6>
+            </td>
+            <td style="width:18%; text-align:right; vertical-align:top;">
+                <img src="{{ public_path('assets/img/logo_cipa.png') }}" style="width:75px;height:75px; margin-top: 10px; margin-right: 1px" />
+            </td>
+        </tr>
+    </table>
 
 <body>
     
@@ -163,9 +163,9 @@
     <footer>
                 <div class="footer">
                     <span> Prefeitura Municipal de Sapucaia do Sul </span><br>
-                    <span> Avenida Dom João Becker, 754 - Centro - CEP 93010-010 </span><br>
-                    <span> (51) 2200-0213 </span></br>
-                    <span> 'São Leopoldo, Berço da Colonização Alemã no Brasil' <span>
+                    <span> Av. Leônidas de Souza, 1289 - CEP: 93210-140 </span><br>
+                    <span> (51) 3451-8062 </span></br>
+                    <span> Cidade das oportunidades <span>
                 </div>
             </footer>
 </body>

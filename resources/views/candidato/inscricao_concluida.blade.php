@@ -16,7 +16,7 @@
         <div class="card-body p-4 text-center" style="color: #7c7c7c;">
           <p class="mb-3"><strong>Inscrição concluída com sucesso!</strong></p>
           <p class="mb-4">Clique no botão abaixo para gerar o comprovante.</p>
-          <a class="btn btn-primary botao w-100" href="{{ route('Candidato_pdfInscricao',['id' => $candidato_id])}}" style="background: #e57373!important;border: 0px;max-width: 300px;">Gerar comprovante</a>
+          <a class="btn btn-primary botao w-100" href="{{ route('Candidato_pdfInscricao',['id' => $candidato_id])}}" target="_blank" rel="noopener noreferrer" style="background: #e57373!important;border: 0px;max-width: 300px;">Gerar comprovante</a>
         </div>
       </div>
     </div>
