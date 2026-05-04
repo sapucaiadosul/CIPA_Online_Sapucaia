@@ -101,7 +101,7 @@
                 <h6>SETOR DE SEGURANÇA DO TRABALHO</h6>
                 <h6>Av. Leônidas de Souza 128 - Bairro: Santa Catarina - Sapucaia do Sul</h6>
                 <h6>(51) 3451-8062</h6>
-                <h6>sesmt@saoleopoldo.rs.gov.br</h6>
+                <h6>seguranca.trabalho@sapucaiadosul.rs.gov.br</h6>
                 <h6>{{ $eleicoes->descricao_eleicao }}</h6>
                 <h6>LISTAGEM GERAL DOS CANDIDATOS</h6>
             </td>
