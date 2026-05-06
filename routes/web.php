@@ -30,10 +30,8 @@ use Illuminate\Support\Facades\Auth;
     Route::get('/candidato/pdf_listagem_geral', 'CandidatoController@pdf_listagem_geral')->name('Candidato_pdfListagemGeral')->middleware('auth');
     Route::get('/candidato/logout','CandidatoController@logout')->name('Candidato_Logout');
 
-    // Lista de servidores
-    Route::get('/servidores', 'ServidorController@index')->name('Servidor_Listar');
-
-    // Rota para importar servidor
+    // Rotas utilizadas na importação de servidores
+    Route::get('/importacoes', 'ImportacaoController@index')->name('importacoes')->middleware('auth');
     Route::post('/importar-servidor', 'ImportacaoController@importar_servidor')->middleware('auth');
 
     Route::get('/votacao','VotacaoController@index')->name('Votacao_Index');
@@ -66,6 +64,8 @@ use Illuminate\Support\Facades\Auth;
     Route::get('/listar/usuario','UsuarioController@index')->name('Usuarios_listUser')->middleware('auth')->middleware(Usuario::class);
 
     Route::put('/users/{user}','UsuarioController@usuario_ativo')->name('users.update')->middleware('auth');
+
+    // Route::get('/listar/usuario','UsuarioController@index')->name('Usuarios_listUser')->middleware('auth')->middleware(usuario::class);
     Route::get('/usuarios/editar/{id}','UsuarioController@editar')->name('Usuarios_editar')->middleware('auth')->middleware(Usuario::class);
     Route::post('/usuarios/editar','UsuarioController@update')->name('Usuarios_update')->middleware('auth')->middleware(Usuario::class);
     Route::get('/usuarios/deletar/{id}','UsuarioController@destroy')->name('Usuarios_destroy')->middleware('auth')->middleware(Usuario::class);
