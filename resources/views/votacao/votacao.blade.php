@@ -100,7 +100,6 @@
             '<div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">' +
             '<a class="btn btn-primary botao" href="' +
             rota_final + '" target="_blank" rel="noopener noreferrer" style="background: #e57373!important;border: 0px;">Gerar comprovante</a>' +
-            '<a class="btn btn-secondary botao" href="{{ route('Votacao_Index') }}" style="border: 0px;">Voltar</a>' +
             '</div>' +
             '</div>' +
             '</div>';
