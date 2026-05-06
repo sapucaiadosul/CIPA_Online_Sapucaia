@@ -1,0 +1,74 @@
+- Instalar:
+
+PHP 8.4
+Composer
+Node 20
+PostgreSQL 16
+
+- Editar php.ini
+
+Configurar:
+
+date.timezone = America/Sao_Paulo
+
+memory_limit = 512M
+max_execution_time = 60
+
+upload_max_filesize = 20M
+post_max_size = 25M
+
+opcache.enable=1
+opcache.memory_consumption=256
+opcache.interned_strings_buffer=16
+opcache.max_accelerated_files=20000
+opcache.validate_timestamps=0
+
+Descomentar:
+
+extension=pdo_pgsql
+extension=pgsql
+extension=mbstring
+extension=openssl
+extension=fileinfo
+extension=tokenizer
+extension=xml
+extension=ctype
+extension=json
+
+- Configurar .env :
+
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=http://
+
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=cipa_db
+DB_USERNAME=cipa_user
+DB_PASSWORD=senha
+
+- Comandos a rodar no projeto:
+> composer install --no-dev --optimize-autoloader
+> php artisan key:generate
+
+> npm install
+> npm run build
+
+- Comandos após banco configurado:
+> php artisan migrate --force
+> php artisan db:seed --force
+> php artisan config:cache
+> php artisan route:cache
+> php artisan view:cache
+> php artisan storage:link
+
+
+
+
+
+
+
+
+
+
