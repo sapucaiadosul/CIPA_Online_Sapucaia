@@ -74,6 +74,12 @@
                                 <p>Importar</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                        <a href="/servidores">
+                                <i class="fa fa-id-card" aria-hidden="true"></i>
+                                <p>Servidores</p>
+                            </a>
+                        </li>
                         <li class="nav-item {{ (request()->is('Candidato_Create')) || (request()->is('Candidato_Listar'))  ? 'active' : '' }}">
                             <a data-toggle="collapse" aria-controls="collapseOne" href="#base">
                                 <i class="fas fa-users"></i>
