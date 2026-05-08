@@ -10,6 +10,7 @@ use App\Candidatos;
 use \Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class EleicaoController extends Controller
 {
@@ -237,7 +238,17 @@ class EleicaoController extends Controller
     {
         $eleicoes = eleicoes::find($id);
         if ($eleicoes) {
+            $anexos = anexos::where('origem_id', $id)->get();
+
+            foreach ($anexos as $anexo) {
+                if ($anexo->arquivo && Storage::disk('public')->exists($anexo->arquivo)) {
+                    Storage::disk('public')->delete($anexo->arquivo);
+                }
+            }
+
+            Storage::disk('public')->deleteDirectory('arquivos/' . $id);
             $eleicoes->delete();
+
             return redirect()->back()->with('Excluir_Eleicoes', '402');
         }
     }
