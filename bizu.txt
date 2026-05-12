@@ -1,67 +1,42 @@
-- Instalar:
+Ver se o Apache está ativo:
+> sudo systemctl status apache2
 
-PHP 8.4
-Composer
-Node 20
-PostgreSQL 16
+Se estiver OK, aparecerá algo assim: Active: active (running)
 
-- Editar php.ini
+Ver se o MySQL está ativo
+> sudo systemctl status mysql
 
-Configurar:
+Se estiver OK: Active: active (running)
 
-date.timezone = America/Sao_Paulo
+Reiniciar Apache
+> sudo systemctl restart apache2
 
-memory_limit = 512M
-max_execution_time = 60
+Reiniciar MySQL
+> sudo systemctl restart mysql
 
-upload_max_filesize = 20M
-post_max_size = 25M
+Reiniciar os dois juntos
+> sudo systemctl restart apache2 mysql
 
-opcache.enable=1
-opcache.memory_consumption=256
-opcache.interned_strings_buffer=16
-opcache.max_accelerated_files=20000
-opcache.validate_timestamps=0
+Ver logs do Apache - Muito útil quando dá erro 500:
+> sudo tail -f /var/log/apache2/error.log
 
-Descomentar:
+Ver logs do Laravel
+> tail -f storage/logs/laravel.log    ou 
+> tail -f storage/logs/*.log
 
-extension=pdo_pgsql
-extension=pgsql
-extension=mbstring
-extension=openssl
-extension=fileinfo
-extension=tokenizer
-extension=xml
-extension=ctype
-extension=json
+Ver se a porta 80 está aberta
+> sudo ss -tulpn | grep :80
+Se Apache estiver rodando: LISTEN
 
-- Configurar .env :
+Ver se MySQL está ouvindo na 3306
+> sudo ss -tulpn | grep :3306
 
-APP_ENV=production
-APP_DEBUG=false
-APP_URL=http://
 
-DB_CONNECTION=pgsql
-DB_HOST=127.0.0.1
-DB_PORT=5432
-DB_DATABASE=cipa_db
-DB_USERNAME=cipa_user
-DB_PASSWORD=senha
 
-- Comandos a rodar no projeto:
-> composer install --no-dev --optimize-autoloader
-> php artisan key:generate
 
-> npm install
-> npm run build
 
-- Comandos após banco configurado:
-> php artisan migrate --force
-> php artisan db:seed --force
-> php artisan config:cache
-> php artisan route:cache
-> php artisan view:cache
-> php artisan storage:link
+
+
 
 
 
