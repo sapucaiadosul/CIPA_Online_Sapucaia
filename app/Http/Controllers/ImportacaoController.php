@@ -7,7 +7,6 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use App\Servidor;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ImportacaoController extends Controller
 {
@@ -116,21 +115,6 @@ class ImportacaoController extends Controller
         return str_getcsv($linha, $delimitador, '"');
     }
 
-    private function sincronizarSequenciaServidores(): void
-    {
-        if (config('database.default') !== 'pgsql') {
-            return;
-        }
-
-        DB::statement(
-            "SELECT setval(
-                pg_get_serial_sequence('servidores', 'id'),
-                COALESCE((SELECT MAX(id) FROM servidores), 1),
-                true
-            )"
-        );
-    }
-
     public function index()
     {
         return view('admin.importacao.index');
@@ -161,8 +145,6 @@ class ImportacaoController extends Controller
         $cabecalho = array_map(fn ($coluna) => $this->normalizarCabecalho($coluna), $dataArray[0] ?? []);
         $importados = 0;
         $ignorados = 0;
-
-        $this->sincronizarSequenciaServidores();
 
         foreach($dataArray as $index => $coluna){
             if ($index === 0) continue;

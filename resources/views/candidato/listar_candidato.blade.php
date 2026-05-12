@@ -35,6 +35,9 @@
                 <label for="eleicao_id" class="col-md-2 col-form-label">Eleição Comissão CIPA:</label>
                 <div class="col-md-4">
                     <select name="eleicao_id" id="eleicao_id" class="form-control" onchange="this.form.submit()">
+                        @if ($eleicoes->isEmpty())
+                        <option value="">Nenhuma eleição cadastrada</option>
+                        @endif
                         @foreach ($eleicoes as $eleicao)
                         <option value="{{ $eleicao->id }}" {{ $eleicao->id == $eleicaoId ? 'selected' : '' }}>
                             {{ $eleicao->descricao_eleicao }}

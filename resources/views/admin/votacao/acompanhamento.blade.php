@@ -14,6 +14,9 @@
                         class="form-select"
                         onchange="this.form.submit()"
                     >
+                        @if ($eleicoes->isEmpty())
+                            <option value="">Nenhuma eleição cadastrada</option>
+                        @endif
                         @foreach ($eleicoes as $eleicao)
                             <option
                                 value="{{ $eleicao->id }}"

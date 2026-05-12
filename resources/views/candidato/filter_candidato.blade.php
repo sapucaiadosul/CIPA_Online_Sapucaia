@@ -15,6 +15,9 @@
                                 <label for="eleicoes_id" class="col-md-5 label-control">Eleições CIPA:</label>
                                 <div class="col-md-7">
                                     <select name="eleicoes_id" class="form-control" id="eleicoes_id">
+                                        @if ($eleicoes->isEmpty())
+                                        <option value="">Nenhuma eleição cadastrada</option>
+                                        @endif
                                         @foreach ($eleicoes as $eleicao)
                                         <option value="{{ $eleicao->id }}"
                                             @if (old('id')==$eleicao->eleicoes_id) {{ 'selected' }} @endif>
@@ -85,7 +88,7 @@
                 @else
                 @foreach ($candidatos as $candidato)
                 <tr>
-                    <td>{{ $candidato->Eleicoes->descricao_eleicao }}</td>
+                    <td>{{ $candidato->Eleicoes->descricao_eleicao ?? '-' }}</td>
                     <td>{{ $candidato->id }}</td>
                     <td>{{ \Carbon\Carbon::parse($candidato->created_at)->format('d/m/Y') }}</td>
                     <td>{{ $candidato->matricula }}</td>

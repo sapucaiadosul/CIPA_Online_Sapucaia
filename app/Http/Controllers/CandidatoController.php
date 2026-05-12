@@ -174,7 +174,7 @@ class CandidatoController extends Controller
             return redirect()->back();
         } else {
             $candidato->update([
-                'eleicoes_id' => 1,
+                'eleicoes_id' => $request->input('eleicoes_id', $candidato->eleicoes_id),
                 'matricula' => $request->matricula,
                 'nome' => $request->nome,
                 'apelido' => $request->apelido,
@@ -204,21 +204,19 @@ class CandidatoController extends Controller
 
     public function list(Request $request)
     {
-
-        // Busca todas as eleições para o dropdown
         $eleicoes = Eleicoes::orderBy('id', 'desc')->get();
+        $eleicaoId = $request->input('eleicao_id') ?? $eleicoes->first()?->id;
 
-        // Eleição selecionada ou padrão última
-        $eleicaoId = $request->input('eleicao_id') ?? $eleicoes->first()->id;
-
-        // Buscar candidatos da eleição selecionada com paginação
         $candidatos = Candidatos::with('Eleicoes')
-            ->where('eleicoes_id', $eleicaoId)
+            ->when($eleicaoId, function ($query) use ($eleicaoId) {
+                $query->where('eleicoes_id', $eleicaoId);
+            }, function ($query) {
+                $query->whereRaw('1 = 0');
+            })
             ->orderBy('nome')
             ->paginate(10)
             ->withQueryString();
 
-        //dd($candidatos[0])->Eleicoes()->id;
         return view('candidato.listar_candidato', compact('candidatos', 'eleicoes', 'eleicaoId'));
     }
 

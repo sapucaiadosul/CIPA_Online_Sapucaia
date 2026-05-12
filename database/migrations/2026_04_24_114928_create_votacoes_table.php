@@ -11,8 +11,7 @@ return new class extends Migration
         Schema::create('votacoes', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigIncrements('id');
-            $table->foreign('eleicoes_id')->references('id')->on('eleicoes');
-            $table->unsignedBigInteger('eleicoes_id');
+            $table->foreignId('eleicoes_id')->constrained('eleicoes');
             $table->char('tipo_voto');
             $table->string('voto_candidato_id')->nullable();
             $table->foreignId('servidor_id')->constrained('servidores')->cascadeOnDelete();
