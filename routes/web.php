@@ -26,9 +26,9 @@ use Illuminate\Support\Facades\Auth;
           Route::post('/editar','CandidatoController@update')->name('Candidato_Update');
           Route::get('/deletar/{id}','CandidatoController@destroy')->name('Candidato_Destroy');
           Route::get('/pdfInscricao/{id}','CandidatoController@pdf_inscricao')->name('Candidato_pdfInscricao');
-          Route::get('/listagem_geral', 'CandidatoController@listagem_geral')->name('Candidato_ListagemGeral')->middleware('auth');
-          Route::post('/filter_candidato', 'CandidatoController@filter_candidato')->name('Candidato_FilterCandidato')->middleware('auth');
-          Route::get('/pdf_listagem_geral', 'CandidatoController@pdf_listagem_geral')->name('Candidato_pdfListagemGeral')->middleware('auth');
+          Route::get('/listagem_geral', 'CandidatoController@listagem_geral')->name('Candidato_ListagemGeral');
+          Route::post('/filter_candidato', 'CandidatoController@filter_candidato')->name('Candidato_FilterCandidato');
+          Route::get('/pdf_listagem_geral', 'CandidatoController@pdf_listagem_geral')->name('Candidato_pdfListagemGeral');
           Route::get('/logout','CandidatoController@logout')->name('Candidato_Logout');
     });
 
