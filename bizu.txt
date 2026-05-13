@@ -1,3 +1,6 @@
+Entrar na pasta do sistema:
+> cd /var/www/html/sistema_cipa
+
 Ver se o Apache está ativo:
 > sudo systemctl status apache2
 
