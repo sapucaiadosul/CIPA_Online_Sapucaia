@@ -1,8 +1,23 @@
 /node_modules
+/public/build
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
+
+# Laravel cache/runtime
+/bootstrap/cache/*.php
+/storage/logs/*
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+
+# Exceptions
+!/storage/logs/.gitignore
+!/storage/framework/cache/.gitignore
+!/storage/framework/sessions/.gitignore
+!/storage/framework/views/.gitignore
+
 .env
 .env.backup
 .phpunit.result.cache
