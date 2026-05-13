@@ -100,7 +100,7 @@
                         <td>{{ $servidor->nome }}</td>
                         <td>{{ $servidor->matricula }}</td>
                         <td>{{ $servidor->cpf }}</td>
-                        <td>{{ $servidor->dt_nascimento_formatada }}</td>
+                        <td>{{ \Carbon\Carbon::parse($servidor->dt_nascimento)->format('d-m-Y') }}</td>
                         <td>{{ $servidor->vinculo }}</td>
                         <td>
                             <a href="{{ route('Servidor_Edit', $servidor->id) }}" class="btn btn-outline-secondary btn-sm" title="Editar">

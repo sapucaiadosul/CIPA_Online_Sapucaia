@@ -15,20 +15,22 @@ use Illuminate\Support\Facades\Auth;
     Route::get('/eleicoes/deletar/{id}', 'EleicaoController@destroy')->name('Eleicoes_Destroy')->middleware('auth');
     Route::get('/eleicoes/baixar_anexos/{id}','EleicaoController@baixar_anexos')->name('Eleicoes_BaixarAnexos')->middleware('auth');
 
-    Route::get('/candidato','CandidatoController@index')->name('Candidato_Index');
-    Route::post('/candidato/login_candidato', 'CandidatoController@login_candidato')->name('Candidato_Login');
-    Route::get('/candidato/incricao', 'CandidatoController@inscricao')->name('Candidato.Inscricao');
-    Route::get('/candidato/novo/','CandidatoController@create')->name('Candidato_Create');
-    Route::post('/candidato/salvar','CandidatoController@store')->name('Candidato_Store');
-    Route::get('/candidato/listar','CandidatoController@list')->name('Candidato_Listar');
-    Route::get('/candidato/editar/{id}','CandidatoController@edit')->name('Candidato_Edit');
-    Route::post('/candidato/editar','CandidatoController@update')->name('Candidato_Update');
-    Route::get('/candidato/deletar/{id}','CandidatoController@destroy')->name('Candidato_Destroy');
-    Route::get('/candidato/pdfInscricao/{id}','CandidatoController@pdf_inscricao')->name('Candidato_pdfInscricao');
-    Route::get('/candidato/listagem_geral', 'CandidatoController@listagem_geral')->name('Candidato_ListagemGeral')->middleware('auth');
-    Route::post('/candidato/filter_candidato', 'CandidatoController@filter_candidato')->name('Candidato_FilterCandidato')->middleware('auth');
-    Route::get('/candidato/pdf_listagem_geral', 'CandidatoController@pdf_listagem_geral')->name('Candidato_pdfListagemGeral')->middleware('auth');
-    Route::get('/candidato/logout','CandidatoController@logout')->name('Candidato_Logout');
+    Route::prefix('candidato')->middleware('auth')->group(function () {
+        Route::get('/','CandidatoController@index')->name('Candidato_Index');
+        Route::post('/login_candidato', 'CandidatoController@login_candidato')->name('Candidato_Login');
+          Route::get('/incricao', 'CandidatoController@inscricao')->name('Candidato.Inscricao');
+          Route::get('/novo/','CandidatoController@create')->name('Candidato_Create');
+          Route::post('/salvar','CandidatoController@store')->name('Candidato_Store');
+          Route::get('/listar','CandidatoController@list')->name('Candidato_Listar');
+          Route::get('/editar/{id}','CandidatoController@edit')->name('Candidato_Edit');
+          Route::post('/editar','CandidatoController@update')->name('Candidato_Update');
+          Route::get('/deletar/{id}','CandidatoController@destroy')->name('Candidato_Destroy');
+          Route::get('/pdfInscricao/{id}','CandidatoController@pdf_inscricao')->name('Candidato_pdfInscricao');
+          Route::get('/listagem_geral', 'CandidatoController@listagem_geral')->name('Candidato_ListagemGeral')->middleware('auth');
+          Route::post('/filter_candidato', 'CandidatoController@filter_candidato')->name('Candidato_FilterCandidato')->middleware('auth');
+          Route::get('/pdf_listagem_geral', 'CandidatoController@pdf_listagem_geral')->name('Candidato_pdfListagemGeral')->middleware('auth');
+          Route::get('/logout','CandidatoController@logout')->name('Candidato_Logout');
+    });
 
     // Rotas utilizadas na importação de servidores
     Route::get('/importacoes', 'ImportacaoController@index')->name('importacoes')->middleware('auth');
