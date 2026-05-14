@@ -63,10 +63,10 @@
                                         </div>
                                         @endif
                                         <div class="form-section">
-                                            <label for="user">Matrícula:</label>
-                                            <input type="text" class="form-control mb-3" name="matricula" id="matricula" required="">
                                             <label for="registration">CPF:</label>
                                             <input type="text" class="form-control" name="cpf" id="cpf" required="">
+                                            <label for="datanasc">Data de nascimento:</label>
+                                            <input type="date" class="form-control" name="datanasc" id="datanasc" required="">                                        
                                         </div>
                                         <div class="text-center mt-4">
                                             <button type="submit" class="btn btn-primary botao" style="width:80%">

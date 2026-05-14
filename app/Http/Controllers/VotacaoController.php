@@ -35,7 +35,7 @@ class VotacaoController extends Controller
         if (!$eleicoes)
             return redirect()->route('Votacao_Index')->with('NaoVota', '402');
 
-        $matricula = $request->input('matricula');
+        $datanasc = $request->input('datanasc');
 
         if ($request->input('cpf')) {
             $cpfSanitizado = str_replace(array('.', '-'), '', $request->input('cpf'));
@@ -46,7 +46,7 @@ class VotacaoController extends Controller
 
         $jaVotou = DB::table('votacoes')
             ->join('servidores', 'votacoes.servidor_id', '=', 'servidores.id')
-            ->where('servidores.matricula', $matricula)
+            ->where('servidores.dt_nascimento', $datanasc)
             ->where('eleicoes_id', $eleicao_id)
             ->count();
 
@@ -54,7 +54,7 @@ class VotacaoController extends Controller
         if ($jaVotou > 0)
             return redirect()->route('Votacao_Index')->with('JaVotou', '402');
 
-        $servidor = Servidor::where('matricula', $matricula)
+        $servidor = Servidor::where('dt_nascimento', $datanasc)
             ->where('cpf', $cpfSanitizado)
             ->first();
 
