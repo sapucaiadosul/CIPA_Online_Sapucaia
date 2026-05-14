@@ -55,16 +55,16 @@
                     @endforeach
                 </div>
                 <div class="row g-3 p-2">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-12">
                         <button type="submit" class="btn btn-secondary botao botao_branco w-100" id="branco">
                             <i class="fa-regular fa-file me-2"></i>Votar em Branco
                         </button>
                     </div>
-                    <div class="col-12 col-md-6">
+                    <!--<div class="col-12 col-md-6">
                         <button type="submit" class="btn btn-secondary botao botao_nulo w-100" id="votos_nulo">
                             <i class="fa-solid fa-xmark me-2"></i>Votar Nulo
-                        </button>
-                    </div>
+                        </button> 
+                    </div> -->
                 </div>
             </div>
         </div>
