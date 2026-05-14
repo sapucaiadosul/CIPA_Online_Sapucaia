@@ -104,7 +104,6 @@
                     <th>Total de votos</th>
                     <th>Votos válidos</th>
                     <th>Votos em branco</th>
-                    <th>Votos nulos</th>
                 </tr>
             </thead>
             <tbody>
@@ -112,7 +111,6 @@
                     <td>{{ $nr_votos }}</td>
                     <td>{{ $voto_valido }}</td>
                     <td>{{ $voto_branco }}</td>
-                    <!-- <td>{{ $voto_nulo }}</td> -->
                 </tr>
             </tbody>
         </table>

@@ -38,10 +38,6 @@
                         <i class="icon-close fs-4"></i>
                         <span>Votos em branco: {{ $voto_branco }}</span>
                     </div>
-                    <!-- <div class="flex-fill d-flex align-items-center gap-2">
-                        <i class="icon-close fs-4"></i>
-                        <span>Votos nulos: {{ $voto_nulo }}</span>
-                    </div> -->
                 </div>
             </div>
         </div>
