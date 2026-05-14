@@ -361,7 +361,7 @@
                                             <th>---</th>
                                             <td><strong>{{$voto_branco}}</strong></td>
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             <th><strong>VOTOS NULOS</strong></th>
                                             <th>NULOS</th>
                                             <th>---</th>
@@ -369,7 +369,7 @@
                                             <th>---</th>
                                             <th>---</th>
                                             <th>---</th>
-                                            <td><strong>{{$voto_nulo}}</strong></td>
+                                            <td><strong>{{$voto_nulo}}</strong></td> -->
                                         </tr>
                                     </tbody>
                                 </table>

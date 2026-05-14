@@ -145,7 +145,7 @@ class VotacaoController extends Controller
         $exibir_mensagem = false;
         $votacao_candidatos = collect();
         $voto_branco = 0;
-        $voto_nulo = 0;
+        //$voto_nulo = 0;
         $voto_valido = 0;
         $nr_votos = 0;
 
@@ -166,10 +166,10 @@ class VotacaoController extends Controller
                 ->where('tipo_voto', 'B')
                 ->count();
 
-            $voto_nulo = DB::table('votacoes')
-                ->where('eleicoes_id', $ultima_eleicao->id)
-                ->where('tipo_voto', 'N')
-                ->count();
+            // $voto_nulo = DB::table('votacoes')
+            //     ->where('eleicoes_id', $ultima_eleicao->id)
+            //     ->where('tipo_voto', 'N')
+            //     ->count();
 
             $voto_valido = DB::table('votacoes')
                 ->where('eleicoes_id', $ultima_eleicao->id)
@@ -207,7 +207,7 @@ class VotacaoController extends Controller
                 ->get();
         }
 
-        return view('votacao.resultados', compact(['votacao_candidatos', 'voto_branco', 'voto_nulo', 'voto_valido', 'nr_votos', 'ultima_eleicao', 'exibir_mensagem']));
+        return view('votacao.resultados', compact(['votacao_candidatos', 'voto_branco', 'voto_valido', 'nr_votos', 'ultima_eleicao', 'exibir_mensagem'])); //'voto_nulo', 
     }
 
     public function acompanhamentoVotacao(Request $request)
@@ -218,7 +218,7 @@ class VotacaoController extends Controller
 
         $votacao_candidatos = collect();
         $voto_branco = 0;
-        $voto_nulo = 0;
+        //$voto_nulo = 0;
         $voto_valido = 0;
         $nr_votos = 0;
         $exibir_mensagem = false;
@@ -230,10 +230,10 @@ class VotacaoController extends Controller
             ->where('tipo_voto', 'B')
             ->count();
 
-        $voto_nulo = DB::table('votacoes')
-            ->where('eleicoes_id', $eleicaoId)
-            ->where('tipo_voto', 'N')
-            ->count();
+        // $voto_nulo = DB::table('votacoes')
+        //     ->where('eleicoes_id', $eleicaoId)
+        //     ->where('tipo_voto', 'N')
+        //     ->count();
 
         $voto_valido = DB::table('votacoes')
             ->where('eleicoes_id', $eleicaoId)
@@ -276,7 +276,7 @@ class VotacaoController extends Controller
             'eleicoes',
             'votacao_candidatos',
             'voto_branco',
-            'voto_nulo',
+            // 'voto_nulo',
             'voto_valido',
             'nr_votos',
             'exibir_mensagem',
@@ -293,10 +293,10 @@ class VotacaoController extends Controller
             ->where('tipo_voto', 'B')
             ->count();
 
-        $voto_nulo = DB::table('votacoes')
-            ->where('eleicoes_id', $eleicao->id)
-            ->where('tipo_voto', 'N')
-            ->count();
+        // $voto_nulo = DB::table('votacoes')
+        //     ->where('eleicoes_id', $eleicao->id)
+        //     ->where('tipo_voto', 'N')
+        //     ->count();
 
         $voto_valido = DB::table('votacoes')
             ->where('eleicoes_id', $eleicao->id)
@@ -338,7 +338,7 @@ class VotacaoController extends Controller
             compact(
                 'eleicao',
                 'voto_branco',
-                'voto_nulo',
+                // 'voto_nulo',
                 'voto_valido',
                 'nr_votos',
                 'votacao_candidatos'

@@ -232,11 +232,11 @@ width: 30%;
     padding: 0px !important;
 }
 
-.botao_nulo{
+/* .botao_nulo{
     width: 40%;
     height: 35px;
     float: left;
-}
+} */
 
 
    

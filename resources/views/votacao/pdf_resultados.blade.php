@@ -112,7 +112,7 @@
                     <td>{{ $nr_votos }}</td>
                     <td>{{ $voto_valido }}</td>
                     <td>{{ $voto_branco }}</td>
-                    <td>{{ $voto_nulo }}</td>
+                    <!-- <td>{{ $voto_nulo }}</td> -->
                 </tr>
             </tbody>
         </table>

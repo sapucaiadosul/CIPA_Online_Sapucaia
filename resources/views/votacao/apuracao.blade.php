@@ -49,14 +49,14 @@
                 <div class="form-group col-md-6">
                     <button type="submit" class="btn btn-secondary botao botao_branco" id="branco"><i style="padding-right: 10px;" class="fa-regular fa-file"></i>Votar em Branco</button>
                 </div>
-                <div class="form-group col-md-6">
-                    <button type="submit" class="btn btn-secondary botao botao_nulo" id="votos_nulo"><i style="padding-right: 10px;" class="fa-solid fa-xmark"></i>Votar Nulo</button>
+                <!-- <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-secondary botao botao_nulo" id="votos_nulo"><i style="padding-right: 10px;" class="fa-solid fa-xmark"></i>Votar Nulo</button> -->
 
                     <!-- <button type="submit" class="btn btn-dark"  id="voto" onClick="confirmarVotacao()">Voto</button>
                     <div id="mostrabotao">
                     </div> -->
 
-                </div>
+                <!-- </div> -->
             </div>
         </div>
     </div>

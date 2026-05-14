@@ -112,11 +112,11 @@ class EleicaoController extends Controller
             ->where('tipo_voto', '=', 'B')
             ->where('eleicoes_id', '=', $id)
             ->value('qtd_voto_branco');
-        $voto_nulo = DB::table('votacoes')
-            ->select(DB::raw('count(*) as tipo_voto'))
-            ->where('tipo_voto', '=', 'N')
-            ->where('eleicoes_id', '=', $id)
-            ->value('qtd_voto_nulo');    
+        // $voto_nulo = DB::table('votacoes')
+        //     ->select(DB::raw('count(*) as tipo_voto'))
+        //     ->where('tipo_voto', '=', 'N')
+        //     ->where('eleicoes_id', '=', $id)
+        //     ->value('qtd_voto_nulo');    
         $votacao_candidatos = DB::table('votacoes')
             ->join('candidatos', 'votacoes.voto_candidato_id', '=', 'candidatos.id')
             ->select('votacoes.voto_candidato_id','candidatos.nome','candidatos.cpf', 'candidatos.apelido',
@@ -130,7 +130,7 @@ class EleicaoController extends Controller
             ->get();  
         $nr_votos = votacoes::where('eleicoes_id', '=', $id)->count();
 
-        return view('admin.eleicao.abas_edit_eleicoes', compact('eleicoes', 'anexos','candidatos','eleicoes_filtro','candidatos_eleicao','votacao_candidatos','voto_branco','voto_nulo','nr_votos'));
+        return view('admin.eleicao.abas_edit_eleicoes', compact('eleicoes', 'anexos','candidatos','eleicoes_filtro','candidatos_eleicao','votacao_candidatos','voto_branco','nr_votos')); // 'voto_nulo',
     }
 
     
