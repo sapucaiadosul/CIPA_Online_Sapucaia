@@ -60,12 +60,15 @@ use Illuminate\Support\Facades\Auth;
     
     Route::post('/votacao/salvando/','VotacaoController@registrar_voto')->name('Votacao_Store');
 
-    Route::get('/audits','AuditController@list_all_audits')->name('Audits_listAll')->middleware('auth');
-    Route::post('/audits/filtro','AuditController@filter')->name('Audits_filter')->middleware('auth');
-    Route::get('/audits/show/{id}','AuditController@show')->name('Audits_show')->middleware('auth'); 
+    Route::middleware(['auth', 'nivel'])->group(function () {
+        Route::get('/audits','AuditController@list_all_audits')->name('Audits_listAll');
+        Route::post('/audits/filtro','AuditController@filter')->name('Audits_filter');
+        Route::get('/audits/show/{id}','AuditController@show')->name('Audits_show'); 
 
-    Route::get('/access','AccessController@list_all_access')->name('Access_listAll')->middleware('auth');
-    Route::post('/access/filtro','AccessController@filter')->name('Access_filter')->middleware('auth');
+        Route::get('/access','AccessController@list_all_access')->name('Access_listAll');
+        Route::post('/access/filtro','AccessController@filter')->name('Access_filter');
+      });
+
 
     Route::get('/home','Controller@home')->name('home')->middleware('auth');
     Route::get('/usuarios/registrar','UsuarioController@create')->name('Usuarios_registeruser')->middleware('auth')->middleware(Usuario::class);

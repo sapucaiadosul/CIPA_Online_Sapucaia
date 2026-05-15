@@ -13,6 +13,10 @@ class User extends Authenticatable implements Auditable
     use \OwenIt\Auditing\Auditable;
     use Notifiable;
 
+    const OPERADOR = 1;
+    const ADMIN = 2;
+    const DEV = 3;
+
     protected $fillable = [
         'name', 'email', 'cpf','password','nivel'
     ];

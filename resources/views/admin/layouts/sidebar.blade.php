@@ -151,7 +151,7 @@
                                         <i class="fa fa-user-circle" aria-hidden="true"></i>
                                         <span class="sub-item">Manutenção de Usuários</span>
                                     </a>
-
+                                @if(in_array(auth()->user()->nivel, [\App\User::ADMIN, \App\User::DEV]))
                                     <a href="{{ route('Audits_listAll') }}">
                                         <i class="fa fa-archive" aria-hidden="true"></i>
                                         <span class="sub-item">Auditoria de Operações</span>
@@ -161,6 +161,7 @@
                                         <i class="fa fa-archive" aria-hidden="true"></i>
                                         <span class="sub-item">Auditoria de Acessos</span>
                                     </a>
+                                @endif    
                                 </ul>
                             </div>
                         </li>
