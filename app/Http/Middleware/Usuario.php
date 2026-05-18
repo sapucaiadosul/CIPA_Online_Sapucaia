@@ -17,7 +17,8 @@ class Usuario
         {
             if (auth()->user()->nivel >= 2) {
                 return $next($request);
+            } else {
+                abort(403, 'Acesso não autorizado.');
             }
-            return redirect('/');
         }
 }
