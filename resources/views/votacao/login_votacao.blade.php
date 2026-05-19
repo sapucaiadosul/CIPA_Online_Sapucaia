@@ -31,6 +31,16 @@
 </script>
 @endif
 
+@if (session('captcha_error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: @json(session('captcha_error'))
+    })
+</script>
+@endif
+
 <body style="background-color: rgb(244, 244, 244)">
 
 
@@ -68,6 +78,17 @@
                                             <label for="datanasc">Data de nascimento:</label>
                                             <input type="date" class="form-control" name="datanasc" id="datanasc" required="">                                        
                                         </div>
+
+                                        <!-- ----------Recaptcha---------- -->
+                                        <div class="form-section mt-4">
+                                            <div class="d-flex justify-content-center">
+                                                <div class="g-recaptcha"
+                                                    data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--  ----------Recaptcha---------- -->
+
                                         <div class="text-center mt-4">
                                             <button type="submit" class="btn btn-primary botao" style="width:80%">
                                                 Acessar
@@ -82,7 +103,7 @@
             </div>
         </div>
     </section>
-
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 <script>
     $('#cpf').mask('999.999.999-99');

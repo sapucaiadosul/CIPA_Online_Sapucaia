@@ -12,6 +12,7 @@ use App\Usuario;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
 class VotacaoController extends Controller
@@ -23,6 +24,21 @@ class VotacaoController extends Controller
 
     public function login_votacao(Request $request)
     {
+
+        $response = Http::asForm()->post(
+                'https://www.google.com/recaptcha/api/siteverify',
+                [
+                    'secret' => env('RECAPTCHA_SECRET_KEY'),
+                    'response' => $request->input('g-recaptcha-response'),
+                ]
+        );
+
+        $resultado = $response->json();
+
+        if (!$resultado['success']) {
+
+            return back()->with('captcha_error', 'É necessário confirmar o reCAPTCHA!');
+        }
 
         $eleicao_id = DB::table('eleicoes')->max('id');
 
