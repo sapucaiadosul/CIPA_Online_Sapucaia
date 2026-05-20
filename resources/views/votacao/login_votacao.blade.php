@@ -83,7 +83,7 @@
                                         <div class="form-section mt-4">
                                             <div class="d-flex justify-content-center">
                                                 <div class="g-recaptcha"
-                                                    data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}">
+                                                    data-sitekey="{{ config('services.recaptcha.site_key') }}">
                                                 </div>
                                             </div>
                                         </div>
