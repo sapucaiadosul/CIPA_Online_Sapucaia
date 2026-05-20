@@ -18,7 +18,7 @@ class User extends Authenticatable implements Auditable
     const DEV = 3;
 
     protected $fillable = [
-        'name', 'email', 'cpf','password','nivel', 'login'
+        'name', 'email', 'cpf','password','nivel'
     ];
 
     protected $hidden = [
