@@ -186,10 +186,10 @@ class ImportacaoController extends Controller
                 : Carbon::createFromFormat('Y-m-d', $dataBruta)->format('Y-m-d');
 
             Servidor::updateOrCreate([
-                'matricula' => $matricula,
+                'cpf' => $cpf,
             ], [
                 'nome' => $nome,
-                'cpf' => $cpf,
+                'matricula' => $matricula,
                 'dt_nascimento' => $dataNascimento,
                 'vinculo' => $vinculo,
             ]);
