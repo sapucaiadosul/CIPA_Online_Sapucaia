@@ -24,7 +24,7 @@ class CandidatoRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'email:rfc,dns', 'ends_with:com,net,org,br,gov,edu,mil,biz'],
+            'email' => ['required', 'email', 'ends_with:com,net,org,br,gov,edu,mil,biz'],
             'apelido' => ['required'],
             'telefone' => ['required'],
             'lotacao' => 'required',

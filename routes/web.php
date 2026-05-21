@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Auth;
         Route::get('/','CandidatoController@index')->name('Candidato_Index');
         Route::post('/login_candidato', 'CandidatoController@login_candidato')->name('Candidato_Login');
           Route::get('/incricao', 'CandidatoController@inscricao')->name('Candidato.Inscricao');
-          Route::get('/novo/','CandidatoController@create')->name('Candidato_Create');
+          Route::get('/novo','CandidatoController@create')->name('Candidato_Create');
           Route::post('/salvar','CandidatoController@store')->name('Candidato_Store');
           Route::get('/listar','CandidatoController@list')->name('Candidato_Listar');
           Route::get('/editar/{id}','CandidatoController@edit')->name('Candidato_Edit');

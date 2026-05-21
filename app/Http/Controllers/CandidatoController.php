@@ -70,7 +70,8 @@ class CandidatoController extends Controller
         }
 
         if ($eleicao) {
-            return view('candidato.novo_candidato', ['eleicao' =>  $eleicao, 'candidatoAutenticado' => $candidatoAutenticado]);
+            session(['eleicao' =>  $eleicao, 'candidatoAutenticado' => $candidatoAutenticado]);
+            return redirect()->route('Candidato_Create');
         } else {
             return redirect()->back()->with('SemData', '404');
         }
@@ -82,9 +83,19 @@ class CandidatoController extends Controller
         return redirect()->route('CIPA_Online.Welcome');
     }
 
-    public function create($candidato)
+    public function create()
     {
-        return view('candidato.novo_candidato', compact('candidato', 'periodo_inscricao', 'resulta'));
+         $eleicao = session('eleicao');
+         $candidatoAutenticado = session('candidatoAutenticado');
+
+        if (!$eleicao || !$candidatoAutenticado) {
+            return redirect()->route('Candidato_Index');
+        }
+
+        return view('candidato.novo_candidato', [
+            'eleicao' => $eleicao,
+            'candidatoAutenticado' => $candidatoAutenticado
+        ]);
     }
 
     public function store(CandidatoRequest $request)
