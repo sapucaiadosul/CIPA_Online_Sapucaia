@@ -1,7 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Usuario;
-use App\Candidatos;
 use Illuminate\Support\Facades\Auth;
 
     Route::get('/','Controller@home')->name('CIPA_Online.Welcome');

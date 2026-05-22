@@ -3,7 +3,6 @@
 @section('content')
 @include('flash::message')
 
-
     <div class="container-fluid" style="padding-top: 20px">
         <div class="position-relative">
             
@@ -87,15 +86,7 @@
                                     <td>{{$candidato->matricula}}</td>
                                     <td>{{$candidato->cargo_funcao}}</td>
                                     <td>{{$candidato->qtd_voto_candidato}}</td>
-                                    <td>
-                                        @if ($candidato->qtd_voto_candidato > 0)
-                                            @if($loop->iteration <= 6)
-                                                Titular
-                                            @elseif($loop->iteration > 6 && $loop->iteration <= 11)
-                                                Suplente
-                                            @endif
-                                        @endif
-                                    </td>
+                                    <td>{{$candidato->situacao}}</td>
                                 </tr>
                                 @empty
                                 <tr>

@@ -288,6 +288,20 @@ class VotacaoController extends Controller
             ->orderBy('qtd_voto_candidato', 'DESC')
             ->get();
 
+        // Classifica os candidatos pela quantidade de votos
+        $votacao_candidatos->transform(function ($candidato, $index) {
+
+            if ($index < 3) { // candidatos titulares (0, 1, 2 são os 3 primeiros candidatos)
+                $candidato->situacao = '🏆 Titular';
+            } elseif ($index < 6) { // candidatos suplentes (3, 4, 5 são os próximos 3 candidatos)
+                $candidato->situacao = '🪑  Suplente';
+            } else {
+                $candidato->situacao = '😔 Não Eleito';
+            }
+
+            return $candidato;
+        });    
+
         return view('admin.votacao.acompanhamento', compact(
             'eleicoes',
             'votacao_candidatos',
