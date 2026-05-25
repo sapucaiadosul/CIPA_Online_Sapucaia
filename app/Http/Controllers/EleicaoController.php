@@ -128,6 +128,21 @@ class EleicaoController extends Controller
              'candidatos.lotacao','candidatos.matricula','candidatos.cargo_funcao')
             ->orderBy('qtd_voto_candidato','DESC')
             ->get();  
+        
+        // Classifica os candidatos pela quantidade de votos
+        $votacao_candidatos->transform(function ($candidato, $index) {
+
+            if ($index < 3) { // candidatos titulares (0, 1, 2 são os 3 primeiros candidatos)
+                $candidato->situacao = '🏆 Titular';
+            } elseif ($index < 6) { // candidatos suplentes (3, 4, 5 são os próximos 3 candidatos)
+                $candidato->situacao = '🪑  Suplente';
+            } else {
+                $candidato->situacao = '😔 Não Eleito';
+            }
+
+            return $candidato;
+        });    
+            
         $nr_votos = votacoes::where('eleicoes_id', '=', $id)->count();
 
         return view('admin.eleicao.abas_edit_eleicoes', compact('eleicoes', 'anexos','candidatos','eleicoes_filtro','candidatos_eleicao','votacao_candidatos','voto_branco','nr_votos')); // 'voto_nulo',

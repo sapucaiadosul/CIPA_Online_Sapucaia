@@ -334,13 +334,7 @@
                                     <tbody align="center">
                                         @foreach ($votacao_candidatos as $totalvotos)
                                         <tr>
-                                            <td>
-                                                @if($loop->index<6)
-                                                    TITULAR ELEITO
-                                                @elseif($loop->index >=6 && $loop->index <11)
-                                                    SUPLENTE
-                                                @endif
-                                            </td>
+                                            <td>{{$totalvotos->situacao}}</td>
                                             <td>{{$totalvotos->nome}}</td>
                                             <td>{{$totalvotos->apelido}}</td>
                                         
