@@ -21,6 +21,7 @@
 <div>
     <div class="card-header text-white" style="background: #1abc9c">
         <h4 class="col-12 modal-title text-center">RESULTADOS DA ELEIÇÃO</h5>
+        <h5 class="col-12 modal-title text-center">{{ $ultima_eleicao->descricao_eleicao ?? 'Eleição não encontrada'}}</h5>
     </div>
     <div class="d-flex justify-content-center" style="padding-top: 20px">
         <div class="col-md-6">

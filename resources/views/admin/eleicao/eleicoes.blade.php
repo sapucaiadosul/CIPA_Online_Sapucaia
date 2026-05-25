@@ -76,21 +76,21 @@
                         <div class="form-group col-md-3">
                             <label for="numero_indicados" class="control-label">Número de Indicados:</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="numero_indicados" name="numero_indicados"  disabled
-                                    placeholder="Número de Indicados" value="{{ old('numero_indicados',11) }}">
+                                <input type="text" class="form-control" id="numero_indicados" name="numero_indicados"  
+                                    placeholder="Número de Indicados" value="{{ old('numero_indicados') }}">
                             </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="numero_nao_indicados" class="control-label">Número de Inscritos(Não Indicados):</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="numero_nao_indicados" name="numero_nao_indicados"  disabled
+                                <input type="text" class="form-control" id="numero_nao_indicados" name="numero_nao_indicados"  
                                     placeholder="Número de Inscritos (Não Indicados)" value="{{ old('numero_nao_indicados') }}">
                             </div>
                         </div>
                         <div class="form-group col-md-3">
                             <label for="numero_eleitos" class="control-label">Número de Eleitos:</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="numero_eleitos" name="numero_eleitos"  disabled
+                                <input type="text" class="form-control" id="numero_eleitos" name="numero_eleitos"  
                                     placeholder="Número de Eleitos" value="{{ old('numero_eleitos') }}">
                             </div>
                         </div>
