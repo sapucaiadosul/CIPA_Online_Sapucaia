@@ -39,7 +39,7 @@ class BackupDatabase extends Command
             mkdir(storage_path('app/backups'), 0755, true);
         }
 
-        $mysqldump = env('MYSQL_DUMP_PATH');
+        $mysqldump = config('backup.mysqldump_path');
 
          $command = sprintf(
             '"%s" --user=%s --password=%s --host=%s %s > "%s"',
