@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('backup:database')->everyMinute();
+        $schedule->command('backup:database')->dailyAt('02:00');
     }
 
     /**
