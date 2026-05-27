@@ -26,10 +26,10 @@ class BackupDatabase extends Command
     public function handle()
     {
         
-        $database = env('DB_DATABASE');
-        $username = env('DB_USERNAME');
-        $password = env('DB_PASSWORD');
-        $host = env('DB_HOST');
+        $database = config('database.connections.mysql.database');
+        $username = config('database.connections.mysql.username');
+        $password = config('database.connections.mysql.password');
+        $host = config('database.connections.mysql.host');
 
         $filename = 'backup_' . date('Y-m-d_H-i-s') . '.sql';
 
@@ -39,10 +39,10 @@ class BackupDatabase extends Command
             mkdir(storage_path('app/backups'), 0755, true);
         }
 
-        $mysqldump = config('backup.mysqldump_path');
+        $mysqldump = config('database.connections.mysql.mysqldump');
 
-         $command = sprintf(
-            '"%s" --user=%s --password=%s --host=%s %s > "%s"',
+        $command = sprintf(
+            '%s --user="%s" --password="%s" --host="%s" "%s" --result-file="%s"',
             $mysqldump,
             $username,
             $password,
@@ -51,11 +51,13 @@ class BackupDatabase extends Command
             $path
         );
 
+        $this->info($command);
+
         exec($command, $output, $resultCode);
 
         if ($resultCode !== 0) {
             $this->error('Erro ao gerar backup.');
-            return;
+            dd($output);
         }
 
         $this->info('Backup realizado com sucesso!');
