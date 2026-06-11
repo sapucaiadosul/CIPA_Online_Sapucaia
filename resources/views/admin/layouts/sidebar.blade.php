@@ -68,12 +68,14 @@
                                 <p>Menu Inicial</p>
                             </a>
                         </li>
+                        @if(in_array(auth()->user()->nivel, [\App\User::ADMIN, \App\User::DEV]))
                         <li class="nav-item">
                             <a href="/importacoes">
                                 <i class="fa fa-download" aria-hidden="true"></i>
                                 <p>Importar</p>
                             </a>
                         </li>
+                        @endif 
                         <li class="nav-item">
                         <a href="/servidores">
                                 <i class="fa fa-id-card" aria-hidden="true"></i>

@@ -45,9 +45,11 @@
                 <button type="button" id="btn-remover" class="btn btn-outline-danger btn-sm" style="display:none;">
                     <i class="fas fa-times"></i> Remover
                 </button>
+                @if(in_array(auth()->user()->nivel, [\App\User::ADMIN, \App\User::DEV]))
                 <button type="button" id="btn-acao" class="btn btn-info btn-sm">
                     <i class="fa fa-download mr-1"></i> Importar servidor(es)
                 </button>
+                @endif                
             </form>
         </div>
     </div>
