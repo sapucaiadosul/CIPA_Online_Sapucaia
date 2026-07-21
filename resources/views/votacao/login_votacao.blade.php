@@ -76,7 +76,7 @@
                                             <label for="registration">CPF:</label>
                                             <input type="text" class="form-control" name="cpf" id="cpf" required="">
                                             <label for="datanasc">Data de nascimento:</label>
-                                            <input type="date" class="form-control" name="datanasc" id="datanasc" required="">                                        
+                                            <input type="text" class="form-control" name="datanasc" id="datanasc" placeholder="DD/MM/AAAA" maxlength="10" required="">                                       
                                         </div>
 
                                         <!-- ----------Recaptcha---------- -->
@@ -107,5 +107,6 @@
 </body>
 <script>
     $('#cpf').mask('999.999.999-99');
+    $('#datanasc').mask('99/99/9999');
 </script>
 @endsection
