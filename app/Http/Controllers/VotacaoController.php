@@ -51,7 +51,10 @@ class VotacaoController extends Controller
         if (!$eleicoes)
             return redirect()->route('Votacao_Index')->with('NaoVota', '402');
 
-        $datanasc = $request->input('datanasc');
+        $datanasc = Carbon::createFromFormat(
+            'd/m/Y',
+            $request->input('datanasc')
+        )->format('Y-m-d');
 
         if ($request->input('cpf')) {
             $cpfSanitizado = str_replace(array('.', '-'), '', $request->input('cpf'));
