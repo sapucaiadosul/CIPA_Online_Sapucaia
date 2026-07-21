@@ -63,19 +63,21 @@ class VotacaoController extends Controller
             ]);
         }
 
-        $jaVotou = DB::table('votacoes')
-            ->join('servidores', 'votacoes.servidor_id', '=', 'servidores.id')
-            ->where('servidores.dt_nascimento', $datanasc)
-            ->where('eleicoes_id', $eleicao_id)
-            ->count();
-
-
-        if ($jaVotou > 0)
-            return redirect()->route('Votacao_Index')->with('JaVotou', '402');
-
         $servidor = Servidor::where('dt_nascimento', $datanasc)
             ->where('cpf', $cpfSanitizado)
             ->first();
+
+        if (!$servidor) {
+            return redirect()->back()->with('error', '404');
+        }    
+
+        $jaVotou = DB::table('votacoes')
+            ->where('servidor_id', $servidor->id)
+            ->where('eleicoes_id', $eleicao_id)
+            ->exists();
+
+        if ($jaVotou > 0)
+            return redirect()->route('Votacao_Index')->with('JaVotou', '402');      
 
         if ($servidor) {
             Session::put('servidor_id', $servidor->id);
