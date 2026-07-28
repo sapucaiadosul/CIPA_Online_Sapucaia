@@ -159,10 +159,12 @@
 
                     <td style="vertical-align:middle">
                         @if ($candidato->qtd_votos > 0)
-                            @if ($loop->iteration <= 6)
-                                Titular
-                            @elseif ($loop->iteration <= 11)
-                                Suplente
+                            @if ($loop->iteration <= 3)
+                                  Titular
+                            @elseif ($loop->iteration <= 6)
+                                 Suplente
+                            @elseif ($loop->iteration > 6)    
+                                  Não Eleito
                             @endif
                         @endif
                     </td>

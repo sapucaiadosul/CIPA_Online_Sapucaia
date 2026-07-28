@@ -103,7 +103,24 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
                         return '<img id="foto" class="avatar-img rounded-circle" style="margin-top: 5px; margin-bottom: 5px; width: 100px; height: 100px; object-fit: cover;" src="' + caminhorecebeFoto + '">'
                     }
                 },
-                { data: "nome" },
+                {
+                    data: "nome",
+                    render: function(data, type, row, meta) {
+                        var resultado = '';
+                        if (meta.row <= 2) {
+                            resultado = '🏆 Titular Eleito';
+                        } else if (meta.row > 2 && meta.row <= 5) {
+                            resultado = '🪑 Suplente';
+                        } else {
+                            resultado = '😔 Não Eleito';
+                        }
+
+                        return '<div class="d-flex flex-column align-items-center">' +
+                            '<span>' + (data || '') + '</span>' +
+                            '<small class="text-muted">' + resultado + '</small>' +
+                            '</div>';
+                    }
+                },
                 { data: "apelido" },
                 { data: "matricula" },
                 { data: "cargo_funcao" },
@@ -116,7 +133,7 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
                       paging: true,
                        ordering: true,
         "order": [
-            [0, "asc"]
+            [5, "desc"]
         ],
         "info": true,
         "sLengthMenu": false,
@@ -169,12 +186,18 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
                     var linha = '<tr><td colspan="6">Ainda não temos dados definidos!</td></tr>';
                     $('#tabela-votacao-candidatos').append(linha);
                 } else {
-                    $.each(data, function(index, votacao_candidato) {
+                    var candidatosOrdenados = data.slice().sort(function(a, b) {
+                        return (parseFloat(b.total_votos) || 0) - (parseFloat(a.total_votos) || 0);
+                    });
+
+                    $.each(candidatosOrdenados, function(index, votacao_candidato) {
                         var resultado = '';
-                    if (index < 6) {
-                        resultado = 'Titular Eleito';
-                    } else if (index >= 6 && index < 11) {
-                        resultado = 'Suplente';
+                    if (index <= 2) {
+                        resultado = '🏆 Titular Eleito';
+                    } else if (index > 2 && index <= 5) {
+                        resultado = '🪑 Suplente';
+                    } else {
+                        resultado = '😔 Não Eleito';
                     }
 
                     var caminhorecebeFoto = "{{ asset('storage') }}/" + votacao_candidato.foto;
@@ -182,12 +205,11 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
                     var linha = 
                         '<div class="card">' +
                         '<div class="card-body">' +
-                        '<h5 class="card-title"><strong>Apurações do Candidato :</strong>' +
-                        (votacao_candidato.nome || ' Aguarde!!') + '</h5>'+
+                        '<h5 class="card-title"><strong>Apurações do Candidato :</strong></h5>' +
+                        '<div><strong>' + (votacao_candidato.nome || 'Aguarde!!') + '</strong></div>' +
+                        '<div class="text-muted mb-2">' + resultado + '</div>' +
                         '<strong>Matrícula: </strong>' +
                         (votacao_candidato.matricula || '') + '<br>' +
-                        '<strong>Resultado: </strong>' +
-                        resultado +
                         '</div>' +
                         '</div>';
                         $('#tabela-votacao-candidatos').append(linha);
