@@ -14,6 +14,32 @@ use Illuminate\Support\Facades\Storage;
 
 class EleicaoController extends Controller
 {
+    private function ordenarCandidatosPorVotosEMatricula($candidatos, string $campoVotos)
+    {
+        return collect($candidatos)
+            ->sort(function ($a, $b) use ($campoVotos) {
+                $votosA = (int) data_get($a, $campoVotos, 0);
+                $votosB = (int) data_get($b, $campoVotos, 0);
+
+                if ($votosA !== $votosB) {
+                    return $votosB <=> $votosA;
+                }
+
+                $matriculaA = (string) data_get($a, 'matricula', '');
+                $matriculaB = (string) data_get($b, 'matricula', '');
+
+                $matriculaANumerica = is_numeric($matriculaA);
+                $matriculaBNumerica = is_numeric($matriculaB);
+
+                if ($matriculaANumerica && $matriculaBNumerica) {
+                    return (int) $matriculaA <=> (int) $matriculaB;
+                }
+
+                return strcmp($matriculaA, $matriculaB);
+            })
+            ->values();
+    }
+
     public function index()
     {
         $eleicoes = eleicoes::all();
@@ -129,6 +155,8 @@ class EleicaoController extends Controller
             ->orderBy('qtd_voto_candidato','DESC')
             ->get();  
         
+        $votacao_candidatos = $this->ordenarCandidatosPorVotosEMatricula($votacao_candidatos, 'qtd_voto_candidato');
+
         // Classifica os candidatos pela quantidade de votos
         $votacao_candidatos->transform(function ($candidato, $index) {
 

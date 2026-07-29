@@ -133,7 +133,8 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
                       paging: true,
                        ordering: true,
         "order": [
-            [5, "desc"]
+            [5, "desc"],
+            [3, "asc"]
         ],
         "info": true,
         "sLengthMenu": false,
@@ -187,7 +188,21 @@ integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxV
                     $('#tabela-votacao-candidatos').append(linha);
                 } else {
                     var candidatosOrdenados = data.slice().sort(function(a, b) {
-                        return (parseFloat(b.total_votos) || 0) - (parseFloat(a.total_votos) || 0);
+                        var votosA = parseFloat(a.total_votos) || 0;
+                        var votosB = parseFloat(b.total_votos) || 0;
+
+                        if (votosA !== votosB) {
+                            return votosB - votosA;
+                        }
+
+                        var matriculaA = parseInt(a.matricula, 10);
+                        var matriculaB = parseInt(b.matricula, 10);
+
+                        if (!Number.isNaN(matriculaA) && !Number.isNaN(matriculaB)) {
+                            return matriculaA - matriculaB;
+                        }
+
+                        return String(a.matricula || '').localeCompare(String(b.matricula || ''));
                     });
 
                     $.each(candidatosOrdenados, function(index, votacao_candidato) {

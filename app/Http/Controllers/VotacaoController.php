@@ -17,6 +17,32 @@ use Illuminate\Support\Facades\Session;
 
 class VotacaoController extends Controller
 {
+    private function ordenarCandidatosPorVotosEMatricula($candidatos, string $campoVotos)
+    {
+        return collect($candidatos)
+            ->sort(function ($a, $b) use ($campoVotos) {
+                $votosA = (int) data_get($a, $campoVotos, 0);
+                $votosB = (int) data_get($b, $campoVotos, 0);
+
+                if ($votosA !== $votosB) {
+                    return $votosB <=> $votosA;
+                }
+
+                $matriculaA = (string) data_get($a, 'matricula', '');
+                $matriculaB = (string) data_get($b, 'matricula', '');
+
+                $matriculaANumerica = is_numeric($matriculaA);
+                $matriculaBNumerica = is_numeric($matriculaB);
+
+                if ($matriculaANumerica && $matriculaBNumerica) {
+                    return (int) $matriculaA <=> (int) $matriculaB;
+                }
+
+                return strcmp($matriculaA, $matriculaB);
+            })
+            ->values();
+    }
+
     public function index()
     {
         return view('votacao.login_votacao');
@@ -293,6 +319,8 @@ class VotacaoController extends Controller
             ->orderBy('qtd_voto_candidato', 'DESC')
             ->get();
 
+        $votacao_candidatos = $this->ordenarCandidatosPorVotosEMatricula($votacao_candidatos, 'qtd_voto_candidato');
+
         // Classifica os candidatos pela quantidade de votos
         $votacao_candidatos->transform(function ($candidato, $index) {
 
@@ -306,7 +334,6 @@ class VotacaoController extends Controller
 
             return $candidato;
         });    
-
         return view('admin.votacao.acompanhamento', compact(
             'eleicoes',
             'votacao_candidatos',
@@ -365,8 +392,9 @@ class VotacaoController extends Controller
                 'candidatos.cargo_funcao',
                 'candidatos.foto'
             )
-            ->orderByDesc('qtd_votos')
             ->get();
+
+        $votacao_candidatos = $this->ordenarCandidatosPorVotosEMatricula($votacao_candidatos, 'qtd_votos');
 
         $pdf = Pdf::loadView(
             'votacao.pdf_resultados',
@@ -411,7 +439,9 @@ class VotacaoController extends Controller
                     'vinculo' => $candidato->vinculo,
 
                 ];
-            })->sortByDesc('total_votos')->values();
+            });
+
+            $candidatos_votos = $this->ordenarCandidatosPorVotosEMatricula($candidatos_votos, 'total_votos');
 
             return response()->json($candidatos_votos);
         } else {
